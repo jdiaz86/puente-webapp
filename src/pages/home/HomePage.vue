@@ -1,0 +1,176 @@
+<template>
+  <q-page>
+      {{ $t('user_authenticated_sucess') }}
+      <br>
+      Another test
+  </q-page>
+</template>
+<script>
+import {
+} from 'quasar'
+// import { mapActions, mapMutations, mapGetters, mapState } from 'vuex'
+import {
+} from '../../store/types'
+
+export default {
+  name: 'home-page',
+  components: {
+  },
+  created () {
+  },
+  data () {
+    return {
+    }
+  },
+  watch: {
+  },
+  computed: {
+  },
+  methods: {
+  }
+}
+</script>
+
+<style lang="css">
+  .popNuevaSolicitud {
+    padding: 0 15%
+  }
+
+  h3 {
+    font-size: 35px;
+    margin-left: 0 !important;
+    margin-bottom: 10px !important;
+    color: #ff8f00;
+    margin-top: 0 !important;
+    font-weight: 300;
+  }
+
+  .q-stepper {
+    box-shadow: none;
+  }
+
+  .q-stepper-header {
+    border: none;
+    box-shadow: none !important;
+  }
+
+  .q-stepper-step-inner {
+    padding: 0;
+  }
+
+  .popNuevaSolicitud .q-input, .popNuevaSolicitud .q-select, .popNuevaSolicitud .q-datetime-range-left, .popNuevaSolicitud .q-datetime-range-right {
+    background: #e7ebf1 !important;
+    border-radius: 5px;
+    padding: 5px 0px 10px 10px;
+    border: 1px solid #bdc8d7;
+    color: #000 !important;
+    box-shadow: none;
+    margin-top: 5px;
+  }
+
+  .popNuevaSolicitud .title {
+    margin-bottom: 5px;
+    margin-top: 10px;
+  }
+
+  .popNuevaSolicitud .q-input:after, .popNuevaSolicitud .q-select:after, .popNuevaSolicitud .q-datetime-range-left:after, .popNuevaSolicitud .q-datetime-range-right:after {
+    color: #207fd1;
+  }
+
+  .modal-content {
+    border-radius: 10px;
+    padding: 30px;
+    max-height: 90vh;
+  }
+
+  .btnOrange {
+    background: #ff8737 !important;
+    border-radius: 5px;
+    box-shadow: none;
+    color: #fff;
+  }
+
+  .btnGray {
+    background: #ababab !important;
+    border-radius: 5px;
+    box-shadow: none;
+  }
+
+  .popNuevaSolicitud h5 {
+    font-size: 16px;
+  }
+
+  .q-stepper-tab {
+    color: #207fd1;
+  }
+
+  .step-active .q-stepper-dot {
+    background: #207fd1;
+  }
+
+  .q-card {
+    background: #fff;
+    border-radius: 10px;
+    height: 255px;
+  }
+
+  .containerContent {
+    padding: 0;
+  }
+
+  .numberInCircle {
+    background: #f18f01;
+    float: left;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    line-height: 24px;
+    width: 25px;
+    border-radius: 50px;
+    padding-top: 1px;
+    margin-top: 4px;
+  }
+
+  .q-card-title {
+    border-bottom: 1px solid #79b2e3;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .q-card-title em {
+    font-style: normal;
+    margin-left: 10px;
+    color: #708196;
+  }
+
+  .bigNumber {
+    text-align: center;
+    color: #708196;
+    font-size: 100px;
+    margin-top: 30px;
+  }
+
+  .textBigNumber {
+    margin-top: 10px;
+    font-size: 29px;
+    color: #708196;
+    margin-bottom: 0;
+
+  }
+
+  .q-card-main {
+    padding-bottom: 0;
+  }
+
+  .descriptionCotizacion p {
+    margin-bottom: 5px;
+  }
+
+  .q-card-actions {
+    padding: 0 20px 20px;
+  }
+
+  .q-item-label {
+    text-align: left;
+  }
+</style>

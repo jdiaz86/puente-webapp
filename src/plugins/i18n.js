@@ -1,13 +1,7 @@
-import VueI18n from 'vue-i18n'
-import messages from 'src/i18n'
+import i18n from 'src/util/i18n'
 
 export default ({ app, Vue }) => {
-  Vue.use(VueI18n)
-
-  // Set i18n instance on app
-  app.i18n = new VueI18n({
-    locale: 'en-us',
-    fallbackLocale: 'en-us',
-    messages
-  })
+  i18n.locale = app.store.state.homeModule.language
+  i18n.fallbackLocale = app.store.state.homeModule.language
+  app.i18n = i18n
 }

@@ -1,0 +1,20 @@
+export default {
+  failed: 'Lo sentimos, algo ha fallado.',
+  success: 'Todo ha salido exitosamente',
+  logout: 'Cerrar Sesión',
+  loading: 'Cargando...',
+  expire_session_message: 'Tu sesión ha expirado, por favor inicia sesión nuevamente.',
+  password_required: 'El password es requerido y debe tener mínimo 8 caracteres.',
+  user_password_required: 'El usuario y password son requeridos.',
+  user_authenticated_sucess: 'Bienvenido, usuario ha sido autenticado.',
+  welcome_user: 'Bienvenido <strong>{name}</strong> a ' + process.env.APP_NAME,
+  about_us_side: 'Para más información, visítanos en: <a target="_blank" href="//' + process.env.URL_APP + '">' + process.env.APP_NAME + ' </a>',
+  app_name: process.env.APP_NAME,
+  app_subtitle: 'Cambiando vidas un niño a la vez.',
+  user_label: 'Usuario',
+  password_label: 'Contraseña',
+  remember_me_label: 'Recordar Sesión',
+  forgot_password_text: '¿Olvidó su contraseña?',
+  login_text: 'Iniciar Sesión',
+  person_label: 'Información Personal'
+}

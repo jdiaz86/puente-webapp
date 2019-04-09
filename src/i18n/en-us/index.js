@@ -1,7 +1,20 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
   failed: 'Action failed',
-  success: 'Action was successful'
+  success: 'Action was successful',
+  logout: 'Logout',
+  loading: 'Loading...',
+  expire_session_message: 'Your session has expired, please log in again._',
+  password_required: 'Password required and must be at least 8 character long.',
+  user_password_required: 'Username and password required',
+  user_authenticated_sucess: 'Welcome, the user has been authenticated',
+  welcome_user: 'Welcome <strong>{name}</strong> to ' + process.env.APP_NAME,
+  about_us_side: 'For more information, please visit us at <a target="_blank" href="//' + process.env.URL_APP + '">' + process.env.APP_NAME + ' </a>',
+  app_name: process.env.APP_NAME,
+  app_subtitle: 'Changing lives one step at a time',
+  user_label: 'User',
+  password_label: 'Password',
+  remember_me_label: 'Remember Me',
+  forgot_password_text: 'Forgot your password?',
+  login_text: 'Login',
+  person_label: 'Personal Information'
 }

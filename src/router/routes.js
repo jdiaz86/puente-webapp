@@ -1,19 +1,84 @@
+import { checkAccessToken } from '../api/api'
+
+function load (page) {
+  return () => import(`pages/${page}.vue`)
+}
 
 const routes = [
   {
+    path: '/login',
+    component: load('login/LoginPage')
+  },
+  {
+    path: '/forgotPassword',
+    component: load('login/ForgotPasswordPage')
+  },
+  {
+    path: '/email/validation/:encodedEmail',
+    component: load('login/ValidationPage')
+  },
+  {
+    path: '/password/restore/:token',
+    component: load('login/RestorePasswordPage')
+  },
+  {
     path: '/',
-    component: () => import('layouts/MyLayout.vue'),
+    component: () => import('layouts/HomeLayout.vue'),
+    beforeEnter: (to, from, next) => {
+      checkAccessToken().then(function (response) {
+        if (response.includes('Error')) {
+          next('/login')
+        } else {
+          next()
+        }
+      })
+    },
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      {
+        path: '/',
+        component: load('home/HomePage')
+      },
+      {
+        path: '/roles',
+        component: load('roles/RolesPage')
+      },
+      {
+        path: '/role/:id?',
+        component: load('roles/RolePage')
+      },
+      {
+        path: '/user',
+        component: load('users/LogInUserPage')
+      },
+      {
+        path: '/users/new',
+        component: load('users/UserCreationPage')
+      },
+      {
+        path: '/user/:id',
+        component: load('users/UserPage')
+      },
+      {
+        path: '/users',
+        component: load('users/UsersPage')
+      },
+      {
+        path: '/users',
+        component: load('users/new')
+      }
     ]
-  }
+  },
+
+  { path: '/forbidden', component: load('error/403') }, // Not access
+  { path: '/backend_disconnected', component: load('error/501') }, // Backend not deployed
+  { path: '*', component: load('error/404') } // Not found
 ]
 
 // Always leave this as last one
 if (process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
-    component: () => import('pages/Error404.vue')
+    component: load('error/404')
   })
 }
 

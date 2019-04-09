@@ -1,20 +1,32 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import example from './module-example'
+import VuexPersistence from 'vuex-persist'
+import localforage from 'localforage'
+
+import loginModule from './login'
+import userModule from './user'
+import homeModule from './home'
 
 Vue.use(Vuex)
 
-/*
- * If not building with SSR mode, you can
+const vuexLocal = new VuexPersistence({
+  storage: localforage // ,
+  // key: 'punte-webapp'
+})
+
+/* If not building with SSR mode, you can
  * directly export the Store instantiation
  */
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      example
-    }
+      loginModule,
+      userModule,
+      homeModule
+    },
+    plugins: [vuexLocal.plugin]
   })
 
   return Store
