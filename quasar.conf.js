@@ -5,7 +5,8 @@ module.exports = function (ctx) {
     // app plugins (/src/plugins)
     plugins: [
       'i18n',
-      'axios'
+      'axios',
+      'vuelidate'
     ],
     css: [
       'app.styl'
@@ -19,6 +20,16 @@ module.exports = function (ctx) {
     ],
     supportIE: true,
     build: {
+      env: {
+        NODE_ENV: "'development'",
+        BACKEND_PROTOCOL_DEV: "'http'",
+        BACKEND_HOSTNAME_DEV: "'localhost'",
+        BACKEND_PORT_DEV: "'8080'",
+        OAUTH_CLIENT: "'instituto_puente'",
+        OAUTH_CLIENT_KEY: "'Instituto_puente2019!'",
+        APP_NAME: "'Instituto Puente'",
+        URL_APP: "'www.facebook.com/institutopuenteapb/'"
+      },
       scopeHoisting: true,
       // vueRouterMode: 'history',
       // vueCompiler: true,
@@ -36,7 +47,7 @@ module.exports = function (ctx) {
     },
     devServer: {
       // https: true,
-      // port: 8080,
+      // port: 8081,
       open: true // opens browser window automatically
     },
     // framework: 'all' --- includes everything; for dev only!
@@ -44,6 +55,7 @@ module.exports = function (ctx) {
       components: [
         'QLayout',
         'QLayoutHeader',
+        'QLayoutFooter',
         'QLayoutDrawer',
         'QPageContainer',
         'QPage',
@@ -55,14 +67,20 @@ module.exports = function (ctx) {
         'QListHeader',
         'QItem',
         'QItemMain',
-        'QItemSide'
+        'QItemSide',
+        'QToggle',
+        'QSelect',
+        'QInput',
+        'QTabs',
+        'QRouteTab',
+        'QPopover'
       ],
       directives: [
         'Ripple'
       ],
       // Quasar plugins
       plugins: [
-        'Notify'
+        'Notify', 'LocalStorage', 'Loading'
       ]
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
       // i18n: 'de' // Quasar language
