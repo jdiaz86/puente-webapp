@@ -21,6 +21,7 @@ module.exports = function (ctx) {
     supportIE: true,
     build: {
       env: {
+        NODE_MODULES_CACHE: "'false'",
         NODE_ENV: "'production'",
         BACKEND_PROTOCOL_DEV: "'http'",
         BACKEND_HOSTNAME_DEV: "'localhost'",
