@@ -25,6 +25,8 @@ module.exports = function (ctx) {
         BACKEND_PROTOCOL_DEV: "'http'",
         BACKEND_HOSTNAME_DEV: "'localhost'",
         BACKEND_PORT_DEV: "'8080'",
+        BACKEND_PROTOCOL_PROD: "'https'",
+        BACKEND_HOSTNAME_PROD: "'puente-app.herokuapp.com'",
         OAUTH_CLIENT: "'instituto_puente'",
         OAUTH_CLIENT_KEY: "'Instituto_puente2019!'",
         APP_NAME: "'Instituto Puente'",
