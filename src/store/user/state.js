@@ -1,6 +1,6 @@
 export default {
-  users: [],
-  user: {
+  items: [],
+  item: {
     name: ''
   },
   saving: false,

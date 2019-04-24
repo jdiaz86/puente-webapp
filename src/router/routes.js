@@ -69,6 +69,14 @@ const routes = [
       {
         path: '/courses/:id',
         component: load('courses/CoursePage')
+      },
+      {
+        path: '/outcomeCategorys',
+        component: load('outcomeCategorys/OutcomeCategorysPage')
+      },
+      {
+        path: '/outcomeCategorys/:id',
+        component: load('outcomeCategorys/OutcomeCategoryPage')
       }
     ]
   },

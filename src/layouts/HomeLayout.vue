@@ -52,7 +52,7 @@
 
         <q-list-header>
           <div class="logo"></div>
-          <p v-html="$t('welcome_user', { name: user.firstName })"></p>
+          <p v-html="$t('welcome_user', { name: item.firstName })"></p>
 
         </q-list-header>
 
@@ -74,6 +74,12 @@
           <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
+        <q-item @click.native="$router.push('/outcomeCategorys')">
+          <q-item-side icon="school" />
+          <q-item-main :label="$t('outcome_categories_menu')" />
+          <q-item-side right icon="subdirectory_arrow_right" />
+        </q-item>
+
         <q-item @click.native="logout()">
           <q-item-side icon="account_circle" />
           <q-item-main :label="$t('logout')" />
@@ -92,7 +98,7 @@
         <q-popover ref="popover2" class="popInfo">
             <div class="fullname" style="padding: 10px 20px;">
                 <div class="avatar"></div>
-                {{user.username}}
+                {{item.username}}
             </div>
             <q-list link>
                 <q-item item highlight to="/user" exact>
@@ -186,7 +192,7 @@ export default {
   },
   computed: {
     ...mapState('homeModule', ['languages', 'language']),
-    ...mapState('userModule', ['user']),
+    ...mapState('userModule', ['item']),
     ...mapState('loginModule', ['authenticated']),
     ...mapGetters('userModule', ['isAdmin', 'isDonor', 'isTeacher'])
 

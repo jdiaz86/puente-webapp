@@ -53,5 +53,11 @@ export default {
   closesession_dialog_message: '¿Está seguro que desea cerrar sesión?',
   closesession_dialog_ok: 'Cerrar Sesión',
   closesession_dialog_cancel: 'Cancelar',
-  closesession_success_message: '¡Sesión cerrada, vuelve a iniciar sesión!'
+  closesession_success_message: '¡Sesión cerrada, vuelve a iniciar sesión!',
+  type_label: 'Tipo',
+  outcomecategory_screen_title: 'Categoría de Egresos',
+  outcome_categories_menu: 'Gestión Categoría de Egresos',
+  create_dialog_title: 'Agregar',
+  create_dialog_message: '¿Está seguro que desea agregar el nuevo registro?',
+  create_dialog_ok: 'Agregar'
 }

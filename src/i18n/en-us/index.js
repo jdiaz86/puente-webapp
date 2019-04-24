@@ -51,5 +51,11 @@ export default {
   closesession_dialog_title: 'Sign out',
   closesession_dialog_message: 'Are you sure you want to sign out?',
   closesession_dialog_ok: 'Sign Out',
-  closesession_success_message: 'Session closed, please log in again!'
+  closesession_success_message: 'Session closed, please log in again!',
+  outcome_categories_menu: 'Manage Outcome Categories',
+  type_label: 'Type',
+  outcomecategory_screen_title: 'Outcome Category',
+  create_dialog_title: 'Create',
+  create_dialog_message: 'Are you sure you want to create the selected item?',
+  create_dialog_ok: 'Create'
 }

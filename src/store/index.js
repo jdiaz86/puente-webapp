@@ -8,6 +8,11 @@ import loginModule from './login'
 import userModule from './user'
 import homeModule from './home'
 import courseModule from './course'
+import outcomeCategoryModule from './outcomeCategory'
+import outcomeModule from './outcome'
+import incomeModule from './income'
+import courseEnrollmentModule from './courseEnrollment'
+import coursePlanningModule from './coursePlanning'
 
 Vue.use(Vuex)
 
@@ -26,7 +31,12 @@ export default function (/* { ssrContext } */) {
       loginModule,
       userModule,
       homeModule,
-      courseModule
+      courseModule,
+      outcomeCategoryModule,
+      outcomeModule,
+      incomeModule,
+      courseEnrollmentModule,
+      coursePlanningModule
     },
     plugins: [vuexLocal.plugin]
   })

@@ -6,12 +6,12 @@
         <div class="row row-form">
           <div class="col-sm-3 col-md-6">
             <q-field icon="account_circle">
-              <q-input v-model="user.username" class="form-control" readonly :float-label="$t('username_label')"/>
+              <q-input v-model="item.username" class="form-control" readonly :float-label="$t('username_label')"/>
             </q-field>
           </div>
           <div class="col-sm-3 col-md-6">
             <q-field icon="email">
-              <q-input v-model="user.email" class="form-control" readonly :float-label="$t('email_label')"/>
+              <q-input v-model="item.email" class="form-control" readonly :float-label="$t('email_label')"/>
             </q-field>
           </div>
       </div>
@@ -19,12 +19,12 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-6">
             <q-field icon="perm_identity">
-              <q-input v-model="user.firstName" class="form-control" readonly :float-label="$t('firstname_label')"/>
+              <q-input v-model="item.firstName" class="form-control" readonly :float-label="$t('firstname_label')"/>
             </q-field>
           </div>
           <div class="col-sm-3 col-md-6">
             <q-field icon="perm_identity">
-              <q-input v-model="user.lastName" class="form-control" readonly :float-label="$t('lastname_label')"/>
+              <q-input v-model="item.lastName" class="form-control" readonly :float-label="$t('lastname_label')"/>
             </q-field>
           </div>
       </div>
@@ -32,12 +32,12 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-6">
             <q-field icon="place">
-              <q-input v-model="user.country" class="form-control" readonly :float-label="$t('country_label')"/>
+              <q-input v-model="item.country" class="form-control" readonly :float-label="$t('country_label')"/>
             </q-field>
           </div>
           <div class="col-sm-3 col-md-6">
             <q-field icon="phone">
-              <q-input v-model="user.phone" class="form-control" readonly :float-label="$t('phone_label')"/>
+              <q-input v-model="item.phone" class="form-control" readonly :float-label="$t('phone_label')"/>
             </q-field>
           </div>
       </div>
@@ -45,12 +45,12 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-6">
             <q-field icon="book">
-              <q-input v-model="user.taxCorrelative" class="form-control" readonly :float-label="$t('taxCorrelative_label')"/>
+              <q-input v-model="item.taxCorrelative" class="form-control" readonly :float-label="$t('taxCorrelative_label')"/>
             </q-field>
           </div>
           <div class="col-sm-3 col-md-6">
             <q-field icon="perm_contact_calendar">
-              <q-input v-model="user.dni" class="form-control" readonly :float-label="$t('dni_label')"/>
+              <q-input v-model="item.dni" class="form-control" readonly :float-label="$t('dni_label')"/>
             </q-field>
           </div>
       </div>
@@ -58,12 +58,12 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-6">
             <q-field icon="perm_identity">
-              <q-input v-model="user.status.name" class="form-control" readonly :float-label="$t('status_label')"/>
+              <q-input v-model="item.status.name" class="form-control" readonly :float-label="$t('status_label')"/>
             </q-field>
           </div>
           <div class="col-sm-3 col-md-6">
             <q-field icon="pin_drop">
-              <q-input v-model="user.foreign" class="form-control" readonly :float-label="$t('foreign_label')"/>
+              <q-input v-model="item.foreign" class="form-control" readonly :float-label="$t('foreign_label')"/>
             </q-field>
           </div>
       </div>
@@ -118,7 +118,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('userModule', ['user', 'saving', 'changingPassword', 'errors', 'error'])
+    ...mapState('userModule', ['item', 'saving', 'changingPassword', 'errors', 'error'])
   },
   methods: {
     ...mapActions('userModule', {
@@ -137,7 +137,7 @@ export default {
       this.confirmPassword = ''
     },
     save () {
-      // this.saveUser({ user })
+      // this.saveUser({ item })
     }
   }
 }

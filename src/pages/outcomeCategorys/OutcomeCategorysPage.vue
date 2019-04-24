@@ -1,6 +1,6 @@
 <template>
   <div class="css-form">
-    <h3 class="legend-title">{{ $t('users_menu') }}</h3>
+    <h3 class="legend-title">{{ $t('outcome_categories_menu') }}</h3>
     <div class="row row-form">
       <div class="col-sm-1 col-md-10">
       </div>
@@ -8,7 +8,7 @@
         <q-btn color="secondary" class="full-width" @click="goBack()" icon="keyboard_backspace"/>
       </div>
       <div class="col-sm-2 col-md-1">
-        <q-btn color="primary" class="full-width" icon="assignment_turned_in"/>
+        <q-btn color="primary" class="full-width" icon="assignment_turned_in" @click="add()"/>
       </div>
     </div>
     <br>
@@ -17,7 +17,7 @@
       :columns="columns"
       :filter="filter"
       :separator="separator"
-      row-key="username"
+      row-key="code"
       color="secondary"
       :selected.sync="selected"
       selection="single"
@@ -42,7 +42,7 @@
       </template>
       <template slot="top-selection" slot-scope="props">
         <q-btn color="info" flat round :icon="props.inFullscreen ? 'view_module' : 'view_module'" @click="view(selected[0].id)" />
-        <q-btn color="positive" flat round icon="edit" @click="edit(selected[0].id)" />
+        <q-btn color="positive" flat round icon="edit" @click="edit(selected[0].id)"/>
         <q-btn color="negative" flat round icon="delete" @click="del(selected[0].id)" />
       </template>
     </q-table>
@@ -57,12 +57,12 @@ import {
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 import {
-  FETCH_USERS
+  FETCH_OUTCOMECATEGORYS
 } from '../../store/types'
 import * as _ from '../../util/util'
 
 export default {
-  name: 'users-page',
+  name: 'outcomeCategorys-page',
   components: {
     QTable,
     QSearch,
@@ -74,43 +74,40 @@ export default {
       filter: '',
       selected: [],
       columns: [
-        { name: 'username', field: 'username', label: this.$t('username_label'), sortable: true },
-        { name: 'firstName', field: 'firstName', label: this.$t('firstname_label'), sortable: true },
-        { name: 'lastName', field: 'lastName', label: this.$t('lastname_label'), sortable: true },
-        { name: 'email', field: 'email', label: this.$t('email_label'), sortable: true },
-        { name: 'country', field: 'country', label: this.$t('country_label'), sortable: true },
-        { name: 'foreign', field: 'foreign', label: this.$t('foreign_label'), sortable: true },
-        { name: 'phone', field: 'phone', label: this.$t('phone_label'), sortable: true }
+        { name: 'name', field: 'name', label: this.$t('name_label'), sortable: true },
+        { name: 'code', field: 'code', label: this.$t('code_label'), sortable: true },
+        { name: 'type', field: 'type', label: this.$t('type_label'), sortable: true },
+        { name: 'description', field: 'description', label: this.$t('description_label'), sortable: true }
       ]
     }
   },
   created () {
-    this.loadUsers()
+    this.loadItems()
   },
   computed: {
-    ...mapState('userModule', ['deleting', 'error', 'items'])
+    ...mapState('outcomeCategoryModule', ['deleting', 'error', 'items'])
   },
   methods: {
-    ...mapActions('userModule', {
-      loadUsers: FETCH_USERS
+    ...mapActions('outcomeCategoryModule', {
+      loadItems: FETCH_OUTCOMECATEGORYS
     }),
     goBack () {
       window.history.go(-1)
     },
     add () {
-      this.$router.push('/users/new')
+      this.$router.push('/outcomeCategorys/new')
     },
     edit (id) {
-      this.$router.push({ path: `/users/${id}`, query: _.queryEdit() })
+      this.$router.push({ path: `/outcomeCategorys/${id}`, query: _.queryEdit() })
     },
     view (id) {
-      this.$router.push({ path: `/users/${id}`, query: _.queryView() })
+      this.$router.push({ path: `/outcomeCategorys/${id}`, query: _.queryView() })
     },
     async del (id) {
       const result = await _.confirmDialog(this.$t('delete_dialog_title'), this.$t('delete_dialog_message'), this.$t('delete_dialog_ok'), this.$t('delete_dialog_cancel'))
       if (result === 1) {
         _.successNotify(this.$t('delete_success_message'))
-        this.loadUsers()
+        this.loadItems()
         this.selected = []
       }
     }

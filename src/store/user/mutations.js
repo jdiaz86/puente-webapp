@@ -15,20 +15,20 @@ const mutations = {
     state.error = null
     state.errors = []
   },
-  [_.SET_LOGGED_IN_USER] (state, user) {
+  [_.SET_LOGGED_IN_USER] (state, item) {
     state.saving = false
-    state.user = user
+    state.item = item
   },
-  [_.SET_USER] (state, user) {
+  [_.SET_USER] (state, item) {
     state.saving = false
-    state.user = user
+    state.item = item
   },
-  [_.SET_USERS] (state, users) {
+  [_.SET_USERS] (state, items) {
     /* for (let user of users) {
       user.userStatusName = user.userStatus.name
       user.userStatusId = user.userStatus.id
     } */
-    state.users = users
+    state.items = items
   },
   [_.USER_ERROR] (state, error) {
     state.error = error
