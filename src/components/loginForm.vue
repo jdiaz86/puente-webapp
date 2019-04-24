@@ -1,29 +1,29 @@
 <template>
-
+<form name="myForm" class="css-form" novalidate>
   <div class="error-page window-height window-width column items-center no-wrap"
        style="background: url('statics/login_background.jpg') center no-repeat; background-size: cover;">
 
-      <div class="login-card shadow-4 bg-white column justify-center content-center">
+      <div class="login-card bg-white column justify-center content-center">
       <div class="items-center row">
-              <div class="col-md-12">
+              <div class="col-sm-10 col-md-12">
                 <img style="width: 100%;" src="statics/logoLogin.jpg"/>
               </div>
             </div>
             <br/>
         <div class="row">
-          <div class="col-12">
+          <div class="col-sm-10 col-md-12">
             <q-field
               icon="perm_identity"
             >
               <q-input
-                :float-label="$t('user_label')"
+                :float-label="$t('username_label')"
                 v-model="login.username"
                 @blur="$v.login.username.$touch"
                 :error="$v.login.username.$error"
               ></q-input>
             </q-field>
           </div>
-          <div class="col-12">
+          <div class="col-sm-10 col-md-12">
             <q-field
               icon="enhanced_encryption"
             >
@@ -31,6 +31,7 @@
                 :float-label="$t('password_label')"
                 v-model="login.password"
                 type="password"
+                autocomplete
                 @keyup.enter="loginUser()"
                 @blur="$v.login.password.$touch"
                 :error="$v.login.password.$error"
@@ -40,14 +41,11 @@
         </div>
         <br/>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-sm-3 col-md-6">
             <q-toggle v-model="login.rememberMe" :label="$t('remember_me_label')"/>
           </div>
-          <div class="lt-md col-4">
-            <br/>
-          </div>
 
-          <div class="col-md-6">
+          <div class="col-sm-3 col-md-6">
             <a style="text-align:right; display:block;" @click="$router.push('/forgotPassword')">{{ $t('forgot_password_text') }}</a>
           </div>
         </div>
@@ -60,6 +58,7 @@
 
       </div>
     </div>
+</form>
 </template>
 
 <script>
@@ -101,7 +100,12 @@ export default {
   watch: {
     error: function (value) {
       if (value) {
-        console.log(value)
+        if (value.message.includes('Network Error')) {
+          _.errorNotify(this.$t('network_access_error'))
+        } else {
+          _.errorNotify(this.$t('bad_credentials_error'))
+        }
+        _.hideLoading()
       }
     },
     authenticated: function (value) {
@@ -124,7 +128,6 @@ export default {
       authenticate: AUTHENTICATE
     }),
     loginUser () {
-      _.changeLanguage()
       this.$v.login.$touch()
       if (this.$v.login.$error) {
         if (this.$v.login.password.$error) {
@@ -153,12 +156,20 @@ export default {
 <style scoped lang="stylus">
   .login-card
     border-radius 8px
-    width 24vw
-    max-width 600px
-    margin 20vh 0;
-    min-width 444px
-    padding 25px
+    width 25vw
+    max-width 80vw
+    margin 15vh 0;
+    min-width 25vw
+    padding 15px
     position absolute
+
+  @media (max-width: 1024px)
+    .login-card
+      min-width 60vw
+
+  @media (max-width: 640px)
+    .login-card
+      min-width 80vw
 
   .btnLogin
     background #ff8f00 !important

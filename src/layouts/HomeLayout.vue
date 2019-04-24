@@ -56,13 +56,25 @@
 
         </q-list-header>
 
-        <q-item @click.native="$router.push('/news')">
-          <q-item-side icon="burst_mode" />
-          <q-item-main label="primer menu" />
+        <q-item @click.native="$router.push('/')">
+          <q-item-side icon="insert_chart" />
+          <q-item-main label="Dashboard" />
           <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
-        <q-item @click.native="logout">
+        <q-item @click.native="$router.push('/users')">
+          <q-item-side icon="group" />
+          <q-item-main :label="$t('users_menu')" />
+          <q-item-side right icon="subdirectory_arrow_right" />
+        </q-item>
+
+        <q-item @click.native="$router.push('/courses')">
+          <q-item-side icon="school" />
+          <q-item-main :label="$t('courses_menu')" />
+          <q-item-side right icon="subdirectory_arrow_right" />
+        </q-item>
+
+        <q-item @click.native="logout()">
           <q-item-side icon="account_circle" />
           <q-item-main :label="$t('logout')" />
           <q-item-side right icon="subdirectory_arrow_right" />
@@ -89,7 +101,7 @@
                 </q-item>
             </q-list>
             <q-list link>
-                <q-item item highlight to="/logout" exact>
+                <q-item item highlight @click.native="logout()">
                     <q-item-side icon="exit_to_app" color="grey" />
                     <q-item-main :label="$t('logout')" />
                 </q-item>
@@ -140,9 +152,9 @@ import {
   QItemMain,
   QItem
 } from 'quasar'
-import { mapState, mapActions, mapGetters } from 'vuex'
-import { CHANGE_LANGUAGE } from '../store/types'
-// import * as _ from '../util/util'
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
+import { CHANGE_LANGUAGE, LOGOUT_USER_SUCCESS } from '../store/types'
+import * as _ from '../util/util'
 
 export default {
   name: 'homeLayout',
@@ -183,8 +195,18 @@ export default {
     ...mapActions('homeModule', {
       changeLanguage: CHANGE_LANGUAGE
     }),
+    ...mapMutations('loginModule', {
+      logoutUser: LOGOUT_USER_SUCCESS
+    }),
     modifyLanguage (lang) {
       this.changeLanguage({ lang })
+    },
+    async logout () {
+      const result = await _.confirmDialog(this.$t('closesession_dialog_title'), this.$t('closesession_dialog_message'), this.$t('closesession_dialog_ok'), this.$t('dialog_cancel'))
+      if (result === 1) {
+        _.successNotify(this.$t('closesession_success_message'))
+        this.logoutUser()
+      }
     }
   }
 }
@@ -217,18 +239,6 @@ export default {
    }
   .layout-aside .q-item-main{
     display: block;
-  }
-  .layout-aside .q-item-side{
-    background: url("../statics/iconSettings.png") center no-repeat;
-    background-size: contain;
-  }
-  .layout-aside .q-item-side.escritorio{
-    background: url("../statics/iconEscritorio.png") center no-repeat;
-    background-size: contain;
-  }
-  .layout-aside .q-item-side.userCompany{
-    background: url("../statics/iconUsers.png") center no-repeat;
-    background-size: contain;
   }
   .logo {
     background: url("../statics/logo.jpg") center no-repeat;
