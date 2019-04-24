@@ -7,12 +7,13 @@ import localforage from 'localforage'
 import loginModule from './login'
 import userModule from './user'
 import homeModule from './home'
+import courseModule from './course'
 
 Vue.use(Vuex)
 
 const vuexLocal = new VuexPersistence({
-  storage: localforage // ,
-  // key: 'punte-webapp'
+  storage: localforage,
+  key: 'punte-webapp'
 })
 
 /* If not building with SSR mode, you can
@@ -24,7 +25,8 @@ export default function (/* { ssrContext } */) {
     modules: {
       loginModule,
       userModule,
-      homeModule
+      homeModule,
+      courseModule
     },
     plugins: [vuexLocal.plugin]
   })

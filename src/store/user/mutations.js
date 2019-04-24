@@ -19,6 +19,17 @@ const mutations = {
     state.saving = false
     state.user = user
   },
+  [_.SET_USER] (state, user) {
+    state.saving = false
+    state.user = user
+  },
+  [_.SET_USERS] (state, users) {
+    /* for (let user of users) {
+      user.userStatusName = user.userStatus.name
+      user.userStatusId = user.userStatus.id
+    } */
+    state.users = users
+  },
   [_.USER_ERROR] (state, error) {
     state.error = error
   },

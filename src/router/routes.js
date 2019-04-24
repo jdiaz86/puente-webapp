@@ -55,7 +55,7 @@ const routes = [
         component: load('users/UserCreationPage')
       },
       {
-        path: '/user/:id',
+        path: '/users/:id',
         component: load('users/UserPage')
       },
       {
@@ -63,8 +63,12 @@ const routes = [
         component: load('users/UsersPage')
       },
       {
-        path: '/users',
-        component: load('users/new')
+        path: '/courses',
+        component: load('courses/CoursesPage')
+      },
+      {
+        path: '/courses/:id',
+        component: load('courses/CoursePage')
       }
     ]
   },
