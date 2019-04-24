@@ -2,7 +2,6 @@
   <q-page>
       {{ $t('user_authenticated_sucess') }}
       <br>
-      Another test
   </q-page>
 </template>
 <script>

@@ -8,12 +8,12 @@
         <q-btn color="secondary" class="full-width" @click="goBack()" icon="keyboard_backspace"/>
       </div>
       <div class="col-sm-2 col-md-1">
-        <q-btn color="primary" class="full-width" icon="assignment_turned_in"/>
+        <q-btn color="primary" class="full-width" icon="assignment_turned_in" @click="add()"/>
       </div>
     </div>
     <br>
     <q-table
-      :data="courses"
+      :data="items"
       :columns="columns"
       :filter="filter"
       :separator="separator"
@@ -82,14 +82,14 @@ export default {
     }
   },
   created () {
-    this.loadCourses()
+    this.loadItems()
   },
   computed: {
-    ...mapState('courseModule', ['deleting', 'error', 'courses'])
+    ...mapState('courseModule', ['deleting', 'error', 'items'])
   },
   methods: {
     ...mapActions('courseModule', {
-      loadCourses: FETCH_COURSES
+      loadItems: FETCH_COURSES
     }),
     goBack () {
       window.history.go(-1)
@@ -107,7 +107,7 @@ export default {
       const result = await _.confirmDialog(this.$t('delete_dialog_title'), this.$t('delete_dialog_message'), this.$t('delete_dialog_ok'), this.$t('delete_dialog_cancel'))
       if (result === 1) {
         _.successNotify(this.$t('delete_success_message'))
-        this.loadCourses()
+        this.loadItems()
         this.selected = []
       }
     }
