@@ -2,7 +2,7 @@
   <div>
     <form name="myForm" class="css-form" novalidate>
       <fieldset>
-        <legend><h3 class="legend-title">{{ $t('course_screen_title') }}</h3></legend>
+        <legend><h3 class="legend-title">{{ $t('outcomecategory_screen_title') }}</h3></legend>
         <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="school">
@@ -22,7 +22,7 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="grade">
-              <q-input v-model="item.grade" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('grade_label')"/>
+              <q-input v-model="item.type" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('type_label')"/>
             </q-field>
           </div>
       </div>
@@ -62,14 +62,14 @@ import {
 } from 'quasar'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import {
-  FETCH_COURSE,
-  SAVE_COURSE,
-  SET_COURSE
+  FETCH_OUTCOMECATEGORY,
+  SAVE_OUTCOMECATEGORY,
+  SET_OUTCOMECATEGORY
 } from '../../store/types'
 import * as _ from '../../util/util'
 
 export default {
-  name: 'coursePage',
+  name: 'outcomeCategoryPage',
   components: {
     QBtn,
     QInput,
@@ -92,15 +92,15 @@ export default {
     }
   },
   computed: {
-    ...mapState('courseModule', ['item', 'saving', 'errors', 'error'])
+    ...mapState('outcomeCategoryModule', ['item', 'saving', 'errors', 'error'])
   },
   methods: {
-    ...mapActions('courseModule', {
-      loadItem: FETCH_COURSE,
-      saveItem: SAVE_COURSE
+    ...mapActions('outcomeCategoryModule', {
+      loadItem: FETCH_OUTCOMECATEGORY,
+      saveItem: SAVE_OUTCOMECATEGORY
     }),
-    ...mapMutations('courseModule', {
-      setItem: SET_COURSE
+    ...mapMutations('outcomeCategoryModule', {
+      setItem: SET_OUTCOMECATEGORY
     }),
     goBack () {
       window.history.go(-1)

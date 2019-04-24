@@ -1,16 +1,16 @@
 import * as _ from '../types'
 
 const mutations = {
-  [_.SET_COURSE] (state, course) {
+  [_.SET_COURSE] (state, item) {
     state.saving = false
-    state.course = course
+    state.item = item
   },
-  [_.SET_COURSES] (state, courses) {
+  [_.SET_COURSES] (state, items) {
     /* for (let course of courses) {
       course.courseStatusName = course.courseStatus.name
       course.courseStatusId = course.courseStatus.id
     } */
-    state.courses = courses
+    state.items = items
   },
   [_.COURSES_ERROR] (state, error) {
     state.error = error
@@ -24,7 +24,6 @@ const mutations = {
   },
   [_.SAVE_COURSE_FINISH] (state) {
     state.saving = false
-    state.changingPassword = false
     state.error = null
     state.errors = []
   }
