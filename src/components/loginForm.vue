@@ -10,7 +10,7 @@
               </div>
             </div>
             <br/>
-        <div class="row">
+        <div class="row input-login">
           <div class="col-sm-10 col-md-12">
             <q-field
               icon="perm_identity"
@@ -187,4 +187,5 @@ export default {
 
   .registrate:hover
     background none !important
+
 </style>
