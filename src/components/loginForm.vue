@@ -172,7 +172,6 @@ export default {
       min-width 80vw
 
   .btnLogin
-    background #ff8f00 !important
     border-radius 8px
     padding 20px
     font-size 15px

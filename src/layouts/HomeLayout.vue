@@ -41,7 +41,7 @@
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
+      :content-class="$q.theme === 'mat' ? 'bg-side' : null"
     >
 
       <q-list
@@ -74,9 +74,27 @@
           <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
+        <q-item @click.native="$router.push('/courseEnrollments')">
+          <q-item-side icon="assignment" />
+          <q-item-main :label="$t('course_enrollments_menu')" />
+          <q-item-side right icon="subdirectory_arrow_right" />
+        </q-item>
+
         <q-item @click.native="$router.push('/outcomeCategorys')">
-          <q-item-side icon="school" />
+          <q-item-side icon="category" />
           <q-item-main :label="$t('outcome_categories_menu')" />
+          <q-item-side right icon="subdirectory_arrow_right" />
+        </q-item>
+
+        <q-item @click.native="$router.push('/incomes')">
+          <q-item-side icon="attach_money" />
+          <q-item-main :label="$t('incomes_menu')" />
+          <q-item-side right icon="subdirectory_arrow_right" />
+        </q-item>
+
+        <q-item @click.native="$router.push('/outcomes')">
+          <q-item-side icon="shopping_cart" />
+          <q-item-main :label="$t('outcomes_menu')" />
           <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
@@ -100,6 +118,12 @@
                 <div class="avatar"></div>
                 {{item.username}}
             </div>
+            <q-list link>
+                <q-item item highlight to="/" exact>
+                    <q-item-side icon="insert_chart" color="grey" />
+                    <q-item-main label="Dashboard" />
+                </q-item>
+            </q-list>
             <q-list link>
                 <q-item item highlight to="/user" exact>
                     <q-item-side icon="person" color="grey" />

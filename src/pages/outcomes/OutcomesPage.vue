@@ -1,6 +1,6 @@
 <template>
   <div class="css-form-items-page">
-    <h3 class="legend-title">{{ $t('outcome_categories_menu') }}</h3>
+    <h3 class="legend-title">{{ $t('outcomes_menu') }}</h3>
     <div class="row row-form">
       <div class="col-sm-1 col-md-10">
       </div>
@@ -17,7 +17,7 @@
       :columns="columns"
       :filter="filter"
       :separator="separator"
-      row-key="code"
+      row-key="id"
       color="secondary"
       :selected.sync="selected"
       selection="single"
@@ -58,12 +58,12 @@ import {
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 import {
-  FETCH_OUTCOMECATEGORYS
+  FETCH_OUTCOMES
 } from '../../store/types'
 import * as _ from '../../util/util'
 
 export default {
-  name: 'outcomeCategorys-page',
+  name: 'outcomes-page',
   components: {
     QTable,
     QSearch,
@@ -75,10 +75,11 @@ export default {
       filter: '',
       selected: [],
       columns: [
-        { name: 'name', field: 'name', label: this.$t('name_label'), sortable: true },
-        { name: 'code', field: 'code', label: this.$t('code_label'), sortable: true },
-        { name: 'type', field: 'type', label: this.$t('type_label'), sortable: true },
-        { name: 'description', field: 'description', label: this.$t('description_label'), sortable: true }
+        { name: 'outcomeCategoryName', field: 'outcomeCategoryName', label: this.$t('outcome_category_name_label'), sortable: true },
+        { name: 'date', field: 'date', label: this.$t('date_label'), sortable: true },
+        { name: 'amount', field: 'amount', label: this.$t('amount_label'), sortable: true },
+        { name: 'description', field: 'description', label: this.$t('description_label'), sortable: true },
+        { name: 'username', field: 'username', label: this.$t('registered_by_label'), sortable: true }
       ]
     }
   },
@@ -86,23 +87,23 @@ export default {
     this.loadItems()
   },
   computed: {
-    ...mapState('outcomeCategoryModule', ['deleting', 'error', 'items'])
+    ...mapState('outcomeModule', ['deleting', 'error', 'items'])
   },
   methods: {
-    ...mapActions('outcomeCategoryModule', {
-      loadItems: FETCH_OUTCOMECATEGORYS
+    ...mapActions('outcomeModule', {
+      loadItems: FETCH_OUTCOMES
     }),
     goBack () {
       window.history.go(-1)
     },
     add () {
-      this.$router.push('/outcomeCategorys/new')
+      this.$router.push('/outcomes/new')
     },
     edit (id) {
-      this.$router.push({ path: `/outcomeCategorys/${id}`, query: _.queryEdit() })
+      this.$router.push({ path: `/outcomes/${id}`, query: _.queryEdit() })
     },
     view (id) {
-      this.$router.push({ path: `/outcomeCategorys/${id}`, query: _.queryView() })
+      this.$router.push({ path: `/outcomes/${id}`, query: _.queryView() })
     },
     async del (id) {
       const result = await _.confirmDialog(this.$t('delete_dialog_title'), this.$t('delete_dialog_message'), this.$t('delete_dialog_ok'), this.$t('dialog_cancel'))

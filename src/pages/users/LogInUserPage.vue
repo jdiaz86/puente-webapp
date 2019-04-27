@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form name="myForm" class="css-form" novalidate>
+    <form name="myForm" class="css-form-item-page" novalidate>
       <fieldset>
         <legend><h3 class="legend-title">{{ $t('person_label') }}</h3></legend>
         <div class="row row-form">
@@ -144,7 +144,5 @@ export default {
 </script>
 
 <style scoped>
-.css-form {
-  margin: 5% 10%;
-}
+
 </style>

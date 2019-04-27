@@ -1,5 +1,5 @@
 <template>
-  <div class="css-form">
+  <div class="css-form-items-page">
     <h3 class="legend-title">{{ $t('users_menu') }}</h3>
     <div class="row row-form">
       <div class="col-sm-1 col-md-10">
@@ -22,6 +22,7 @@
       :selected.sync="selected"
       selection="single"
       dense
+      dark
       id="custom-table">
       <template slot="top-left" slot-scope="props">
         <q-search
@@ -107,7 +108,7 @@ export default {
       this.$router.push({ path: `/users/${id}`, query: _.queryView() })
     },
     async del (id) {
-      const result = await _.confirmDialog(this.$t('delete_dialog_title'), this.$t('delete_dialog_message'), this.$t('delete_dialog_ok'), this.$t('delete_dialog_cancel'))
+      const result = await _.confirmDialog(this.$t('delete_dialog_title'), this.$t('delete_dialog_message'), this.$t('delete_dialog_ok'), this.$t('dialog_cancel'))
       if (result === 1) {
         _.successNotify(this.$t('delete_success_message'))
         this.loadUsers()
@@ -119,7 +120,5 @@ export default {
 </script>
 
 <style scoped>
-.css-form {
-  margin: 3%;
-}
+
 </style>
