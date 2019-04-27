@@ -1,1 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["2d0ddf43"],{"841b":function(n,e,o){"use strict";o.r(e);var l,s,u=o("2877"),i={},p=Object(u["a"])(i,l,s,!1,null,null,null);p.options.__file="incomes.vue",e["default"]=p.exports}}]);
