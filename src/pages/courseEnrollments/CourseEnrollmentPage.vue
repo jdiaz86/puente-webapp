@@ -2,27 +2,35 @@
   <div>
     <form name="myForm" class="css-form-item-page" novalidate>
       <fieldset>
-        <legend><h3 class="legend-title">{{ $t('outcomecategory_screen_title') }}</h3></legend>
+        <legend><h3 class="legend-title">{{ $t('course_enrollment_screen_title') }}</h3></legend>
         <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="shopping_basket">
-              <q-input v-model="item.name" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('name_label')"/>
+            <q-field icon="person">
+              <q-input v-model="item.user.username" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('teacher_label')"/>
             </q-field>
           </div>
       </div>
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="code">
-              <q-input v-model="item.code" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('code_label')"/>
+            <q-field icon="school">
+              <q-input v-model="item.course.name" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('course_name_label')"/>
             </q-field>
           </div>
        </div>
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="pages">
-              <q-input v-model="item.type" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('type_label')"/>
+            <q-field icon="calendar_today">
+              <q-input v-model="item.year" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('year_label')"/>
+            </q-field>
+          </div>
+      </div>
+
+      <div class="row row-form">
+          <div class="col-sm-3 col-md-12">
+            <q-field icon="group">
+              <q-input v-model="item.studentsAmount" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('students_amount_label')"/>
             </q-field>
           </div>
       </div>
@@ -62,14 +70,14 @@ import {
 } from 'quasar'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import {
-  FETCH_OUTCOMECATEGORY,
-  SAVE_OUTCOMECATEGORY,
-  SET_OUTCOMECATEGORY
+  FETCH_COURSE_ENROLLMENT,
+  SAVE_COURSE_ENROLLMENT,
+  SET_COURSE_ENROLLMENT
 } from '../../store/types'
 import * as _ from '../../util/util'
 
 export default {
-  name: 'outcomeCategoryPage',
+  name: 'courseEnrollmentPage',
   components: {
     QBtn,
     QInput,
@@ -92,15 +100,15 @@ export default {
     }
   },
   computed: {
-    ...mapState('outcomeCategoryModule', ['item', 'saving', 'errors', 'error'])
+    ...mapState('courseEnrollmentModule', ['item', 'saving', 'errors', 'error'])
   },
   methods: {
-    ...mapActions('outcomeCategoryModule', {
-      loadItem: FETCH_OUTCOMECATEGORY,
-      saveItem: SAVE_OUTCOMECATEGORY
+    ...mapActions('courseEnrollmentModule', {
+      loadItem: FETCH_COURSE_ENROLLMENT,
+      saveItem: SAVE_COURSE_ENROLLMENT
     }),
-    ...mapMutations('outcomeCategoryModule', {
-      setItem: SET_OUTCOMECATEGORY
+    ...mapMutations('courseEnrollmentModule', {
+      setItem: SET_COURSE_ENROLLMENT
     }),
     goBack () {
       window.history.go(-1)

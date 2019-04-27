@@ -77,6 +77,38 @@ const routes = [
       {
         path: '/outcomeCategorys/:id',
         component: load('outcomeCategorys/OutcomeCategoryPage')
+      },
+      {
+        path: '/courseEnrollments',
+        component: load('courseEnrollments/CourseEnrollmentsPage')
+      },
+      {
+        path: '/courseEnrollments/:id',
+        component: load('courseEnrollments/CourseEnrollmentPage')
+      },
+      {
+        path: '/coursePlannings',
+        component: load('coursePlannings/CoursePlanningsPage')
+      },
+      {
+        path: '/coursePlannings/:id',
+        component: load('coursePlannings/CoursePlanningPage')
+      },
+      {
+        path: '/incomes',
+        component: load('incomes/IncomesPage')
+      },
+      {
+        path: '/incomes/:id',
+        component: load('incomes/IncomePage')
+      },
+      {
+        path: '/outcomes',
+        component: load('outcomes/OutcomesPage')
+      },
+      {
+        path: '/outcomes/:id',
+        component: load('outcomes/OutcomePage')
       }
     ]
   },

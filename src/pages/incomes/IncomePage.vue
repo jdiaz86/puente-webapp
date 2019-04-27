@@ -2,27 +2,51 @@
   <div>
     <form name="myForm" class="css-form-item-page" novalidate>
       <fieldset>
-        <legend><h3 class="legend-title">{{ $t('outcomecategory_screen_title') }}</h3></legend>
+        <legend><h3 class="legend-title">{{ $t('income_screen_title') }}</h3></legend>
         <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="shopping_basket">
-              <q-input v-model="item.name" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('name_label')"/>
+            <q-field icon="person">
+              <q-input v-model="item.user.username" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('donor_name_label')"/>
             </q-field>
           </div>
       </div>
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="code">
-              <q-input v-model="item.code" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('code_label')"/>
+            <q-field icon="calendar_today">
+              <q-input v-model="item.date" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('date_label')"/>
+            </q-field>
+          </div>
+      </div>
+
+      <div class="row row-form">
+          <div class="col-sm-3 col-md-12">
+            <q-field icon="person_pin">
+              <q-input v-model="item.username" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('registered_by_label')"/>
             </q-field>
           </div>
        </div>
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="pages">
-              <q-input v-model="item.type" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('type_label')"/>
+            <q-field icon="local_atm">
+              <q-input v-model="item.amount" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('amount_label')"/>
+            </q-field>
+          </div>
+      </div>
+
+      <div class="row row-form">
+          <div class="col-sm-3 col-md-12">
+            <q-field icon="money">
+              <q-input v-model="item.amountText" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('amount_text_label')"/>
+            </q-field>
+          </div>
+      </div>
+
+      <div class="row row-form">
+          <div class="col-sm-3 col-md-12">
+            <q-field icon="monetization_on">
+              <q-input v-model="item.payMethod" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('pay_method_label')"/>
             </q-field>
           </div>
       </div>
@@ -62,14 +86,14 @@ import {
 } from 'quasar'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import {
-  FETCH_OUTCOMECATEGORY,
-  SAVE_OUTCOMECATEGORY,
-  SET_OUTCOMECATEGORY
+  FETCH_INCOME,
+  SAVE_INCOME,
+  SET_INCOME
 } from '../../store/types'
 import * as _ from '../../util/util'
 
 export default {
-  name: 'outcomeCategoryPage',
+  name: 'incomePage',
   components: {
     QBtn,
     QInput,
@@ -92,15 +116,15 @@ export default {
     }
   },
   computed: {
-    ...mapState('outcomeCategoryModule', ['item', 'saving', 'errors', 'error'])
+    ...mapState('incomeModule', ['item', 'saving', 'errors', 'error'])
   },
   methods: {
-    ...mapActions('outcomeCategoryModule', {
-      loadItem: FETCH_OUTCOMECATEGORY,
-      saveItem: SAVE_OUTCOMECATEGORY
+    ...mapActions('incomeModule', {
+      loadItem: FETCH_INCOME,
+      saveItem: SAVE_INCOME
     }),
-    ...mapMutations('outcomeCategoryModule', {
-      setItem: SET_OUTCOMECATEGORY
+    ...mapMutations('incomeModule', {
+      setItem: SET_INCOME
     }),
     goBack () {
       window.history.go(-1)
