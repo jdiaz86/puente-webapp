@@ -6,7 +6,10 @@
         <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="category">
-              <q-input v-model="item.outcomeCategory.name" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('outcome_category_name_label')"/>
+              <q-select v-model="item.outcomeCategory" :options="categoryOptions" filter dark clearable
+                        :display-value="item.outcomeCategory ? item.outcomeCategory.name : undefined"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('outcome_category_name_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
       </div>
@@ -14,7 +17,7 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="calendar_today">
-              <q-input v-model="item.date" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('date_label')"/>
+              <q-datetime v-model="item.date" type="date" clearable format="DD-MMM-YYYY" class="form-control" readonly disabled :float-label="$t('date_label')"/>
             </q-field>
           </div>
       </div>
@@ -22,7 +25,7 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="person_pin">
-              <q-input v-model="item.user.username" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('registered_by_label')"/>
+              <q-input v-model="item.username" class="form-control" readonly disabled :float-label="$t('registered_by_label')"/>
             </q-field>
           </div>
        </div>
@@ -76,11 +79,12 @@ import {
   QInput,
   QField
 } from 'quasar'
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import {
   FETCH_OUTCOME,
   SAVE_OUTCOME,
-  SET_OUTCOME
+  SET_OUTCOME,
+  SAVE_OUTCOME_FINISH
 } from '../../store/types'
 import * as _ from '../../util/util'
 
@@ -99,6 +103,8 @@ export default {
     } else {
       this.setItem({})
       this.editMode = true
+      this.item.username = this.loginUser.username
+      this.item.date = _.formatDate(new Date())
     }
   },
   data () {
@@ -107,8 +113,18 @@ export default {
       editMode: false
     }
   },
+  watch: {
+    saving: function (val) {
+      if (val) {
+        _.successNotify(this.$t('modify_success_message'))
+        this.goBack()
+      }
+    }
+  },
   computed: {
-    ...mapState('outcomeModule', ['item', 'saving', 'errors', 'error'])
+    ...mapState('outcomeModule', ['item', 'saving', 'errors', 'error']),
+    ...mapState('userModule', ['loginUser']),
+    ...mapGetters('outcomeCategoryModule', ['categoryOptions'])
   },
   methods: {
     ...mapActions('outcomeModule', {
@@ -116,7 +132,8 @@ export default {
       saveItem: SAVE_OUTCOME
     }),
     ...mapMutations('outcomeModule', {
-      setItem: SET_OUTCOME
+      setItem: SET_OUTCOME,
+      saveFinish: SAVE_OUTCOME_FINISH
     }),
     goBack () {
       window.history.go(-1)
@@ -135,8 +152,7 @@ export default {
       const result = await _.confirmDialog(title, message, ok, this.$t('dialog_cancel'))
       if (result === 1) {
         this.saveItem({ item: this.item })
-        _.successNotify(this.$t('modify_success_message'))
-        this.goBack()
+        this.saveFinish()
       }
     }
   }

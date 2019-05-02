@@ -6,7 +6,10 @@
         <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="person">
-              <q-input v-model="item.user.username" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('donor_name_label')"/>
+              <q-select v-model="item.user" :options="userDonorsOptions" filter dark clearable
+                        :display-value="item.user ? item.user.username : undefined"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('donor_name_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
       </div>
@@ -14,7 +17,7 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="calendar_today">
-              <q-input v-model="item.date" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('date_label')"/>
+              <q-datetime v-model="item.date" type="date" clearable format="DD-MMM-YYYY" class="form-control" readonly disabled :float-label="$t('date_label')"/>
             </q-field>
           </div>
       </div>
@@ -22,7 +25,7 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="person_pin">
-              <q-input v-model="item.username" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('registered_by_label')"/>
+              <q-input v-model="item.username" class="form-control" readonly disabled :float-label="$t('registered_by_label')"/>
             </q-field>
           </div>
        </div>
@@ -46,7 +49,10 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="monetization_on">
-              <q-input v-model="item.payMethod" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('pay_method_label')"/>
+              <q-select v-model="item.payMethod" :options="payMethodListOptions" filter dark clearable
+                        :display-value="payMethodListOptions.find(el => el.value === item.payMethod) ? payMethodListOptions.find(el => el.value === item.payMethod).label : null"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('type_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
       </div>
@@ -84,11 +90,12 @@ import {
   QInput,
   QField
 } from 'quasar'
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import {
   FETCH_INCOME,
   SAVE_INCOME,
-  SET_INCOME
+  SET_INCOME,
+  SAVE_INCOME_FINISH
 } from '../../store/types'
 import * as _ from '../../util/util'
 
@@ -107,16 +114,29 @@ export default {
     } else {
       this.setItem({})
       this.editMode = true
+      this.item.username = this.loginUser.username
+      this.item.date = _.formatDate(new Date())
     }
   },
   data () {
     return {
       viewMode: false,
-      editMode: false
+      editMode: false,
+      payMethodListOptions: _.payMethodOptions()
+    }
+  },
+  watch: {
+    saving: function (val) {
+      if (val) {
+        _.successNotify(this.$t('modify_success_message'))
+        this.goBack()
+      }
     }
   },
   computed: {
-    ...mapState('incomeModule', ['item', 'saving', 'errors', 'error'])
+    ...mapState('incomeModule', ['item', 'saving', 'errors', 'error']),
+    ...mapState('userModule', ['loginUser']),
+    ...mapGetters('userModule', ['userDonorsOptions'])
   },
   methods: {
     ...mapActions('incomeModule', {
@@ -124,7 +144,8 @@ export default {
       saveItem: SAVE_INCOME
     }),
     ...mapMutations('incomeModule', {
-      setItem: SET_INCOME
+      setItem: SET_INCOME,
+      saveFinish: SAVE_INCOME_FINISH
     }),
     goBack () {
       window.history.go(-1)
@@ -143,8 +164,7 @@ export default {
       const result = await _.confirmDialog(title, message, ok, this.$t('dialog_cancel'))
       if (result === 1) {
         this.saveItem({ item: this.item })
-        _.successNotify(this.$t('modify_success_message'))
-        this.goBack()
+        this.saveFinish()
       }
     }
   }
