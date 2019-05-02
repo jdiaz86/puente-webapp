@@ -17,7 +17,7 @@ const mutations = {
   },
   [_.SET_LOGGED_IN_USER] (state, item) {
     state.saving = false
-    state.item = item
+    state.loginUser = item
   },
   [_.SET_USER] (state, item) {
     state.saving = false

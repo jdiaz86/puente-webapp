@@ -27,7 +27,7 @@ export default {
   taxCorrelative_label: 'Identificación tributaria',
   dni_label: 'Identificación única',
   status_label: 'Estado',
-  foreign_label: '¿Extranjero?',
+  state_label: 'Estado / Departamento',
   goback_text: 'Regresar',
   save_text: 'Guardar',
   users_menu: 'Gestión de Usuarios',

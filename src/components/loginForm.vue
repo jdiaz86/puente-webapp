@@ -63,7 +63,6 @@
 
 <script>
 import {
-  LocalStorage,
   QBtn,
   QToggle,
   QInput,
@@ -71,7 +70,7 @@ import {
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 import { required, minLength } from 'vuelidate/lib/validators'
-import { AUTHENTICATE, FETCH_LOGGED_IN_USER } from '../store/types'
+import { AUTHENTICATE, FETCH_LOGGED_IN_USER, FETCH_USERS } from '../store/types'
 import * as _ from '../util/util'
 
 export default {
@@ -109,9 +108,10 @@ export default {
       }
     },
     authenticated: function (value) {
-      if ((value && value === true) && LocalStorage.get.item('token')) {
+      if ((value && value === true) && _.getStorage('token')) {
         this.$router.push('/')
         this.loadLoggedInUser()
+        this.loadUsers()
         _.successNotify(this.$t('user_authenticated_sucess'))
         _.hideLoading()
       }
@@ -122,7 +122,8 @@ export default {
   },
   methods: {
     ...mapActions('userModule', {
-      loadLoggedInUser: FETCH_LOGGED_IN_USER
+      loadLoggedInUser: FETCH_LOGGED_IN_USER,
+      loadUsers: FETCH_USERS
     }),
     ...mapActions('loginModule', {
       authenticate: AUTHENTICATE
@@ -138,13 +139,13 @@ export default {
       } else {
         _.showLoading(this.$t('loading'))
         if (this.login.rememberMe && this.login.rememberMe === true) {
-          LocalStorage.set('rememberMe', true)
-          LocalStorage.set('username', this.login.username)
-          LocalStorage.set('password', this.login.password)
+          _.setStorage('rememberMe', true)
+          _.setStorage('username', this.login.username)
+          _.setStorage('password', this.login.password)
         } else {
-          LocalStorage.remove('rememberMe')
-          LocalStorage.remove('username')
-          LocalStorage.remove('password')
+          _.removeStorage('rememberMe')
+          _.removeStorage('username')
+          _.removeStorage('password')
         }
         this.$emit('onLogin', this.login)
       }

@@ -74,11 +74,12 @@ export default {
       separator: 'horizontal',
       filter: '',
       selected: [],
+      gradeListOptions: _.gradeOptions(),
       columns: [
-        { name: 'name', field: 'name', label: this.$t('name_label'), sortable: true },
-        { name: 'description', field: 'description', label: this.$t('description_label'), sortable: true },
-        { name: 'code', field: 'code', label: this.$t('code_label'), sortable: true },
-        { name: 'grade', field: 'grade', label: this.$t('grade_label'), sortable: true }
+        { name: 'code', field: 'code', label: this.$t('code_label'), align: 'left', sortable: true },
+        { name: 'name', field: 'name', label: this.$t('name_label'), align: 'left', sortable: true },
+        { name: 'grade', field: 'grade', type: 'string', label: this.$t('grade_label'), format: val => this.gradeListOptions[val - 1].label, align: 'left', sortable: true },
+        { name: 'description', field: 'description', label: this.$t('description_label'), align: 'left', sortable: true }
       ]
     }
   },

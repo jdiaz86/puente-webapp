@@ -52,7 +52,7 @@
 
         <q-list-header>
           <div class="logo"></div>
-          <p v-html="$t('welcome_user', { name: item.firstName })"></p>
+          <p v-html="$t('welcome_user', { name: loginUser.firstName })"></p>
 
         </q-list-header>
 
@@ -116,7 +116,7 @@
         <q-popover ref="popover2" class="popInfo">
             <div class="fullname" style="padding: 10px 20px;">
                 <div class="avatar"></div>
-                {{item.username}}
+                {{loginUser.username}}
             </div>
             <q-list link>
                 <q-item item highlight to="/" exact>
@@ -173,7 +173,6 @@
 
 <script>
 import {
-  LocalStorage,
   QLayout,
   QBtn,
   QIcon,
@@ -206,17 +205,18 @@ export default {
   watch: {
     authenticated (value) {
       if (value === false) {
-        LocalStorage.remove('token')
+        _.removeStorage('token')
         this.$router.push('/login')
       }
     },
     language (value) {
       this.$i18n.locale = value
+      _.setStorage('lang', value)
     }
   },
   computed: {
     ...mapState('homeModule', ['languages', 'language']),
-    ...mapState('userModule', ['item']),
+    ...mapState('userModule', ['item', 'loginUser']),
     ...mapState('loginModule', ['authenticated']),
     ...mapGetters('userModule', ['isAdmin', 'isDonor', 'isTeacher'])
 

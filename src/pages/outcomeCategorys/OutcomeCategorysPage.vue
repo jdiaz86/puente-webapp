@@ -74,11 +74,12 @@ export default {
       separator: 'horizontal',
       filter: '',
       selected: [],
+      categoryTypeListOptions: _.categoryTypeOptions(),
       columns: [
-        { name: 'name', field: 'name', label: this.$t('name_label'), sortable: true },
-        { name: 'code', field: 'code', label: this.$t('code_label'), sortable: true },
-        { name: 'type', field: 'type', label: this.$t('type_label'), sortable: true },
-        { name: 'description', field: 'description', label: this.$t('description_label'), sortable: true }
+        { name: 'code', field: 'code', label: this.$t('code_label'), align: 'left', sortable: true },
+        { name: 'name', field: 'name', label: this.$t('name_label'), align: 'left', sortable: true },
+        { name: 'type', field: 'type', label: this.$t('type_label'), align: 'left', format: val => this.categoryTypeListOptions.find(el => el.value === val).label, sortable: true },
+        { name: 'description', field: 'description', label: this.$t('description_label'), align: 'left', sortable: true }
       ]
     }
   },

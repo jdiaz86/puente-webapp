@@ -22,7 +22,10 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="pages">
-              <q-input v-model="item.type" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('type_label')"/>
+              <q-select v-model="item.type" :options="categoryTypeListOptions" filter dark
+                        :display-value="categoryTypeListOptions.find(el => el.value === item.type) ? categoryTypeListOptions.find(el => el.value === item.type).label : ''"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('type_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
       </div>
@@ -64,7 +67,8 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import {
   FETCH_OUTCOMECATEGORY,
   SAVE_OUTCOMECATEGORY,
-  SET_OUTCOMECATEGORY
+  SET_OUTCOMECATEGORY,
+  SAVE_OUTCOMECATEGORY_FINISH
 } from '../../store/types'
 import * as _ from '../../util/util'
 
@@ -88,7 +92,16 @@ export default {
   data () {
     return {
       viewMode: false,
-      editMode: false
+      editMode: false,
+      categoryTypeListOptions: _.categoryTypeOptions()
+    }
+  },
+  watch: {
+    saving: function (val) {
+      if (val) {
+        _.successNotify(this.$t('modify_success_message'))
+        this.goBack()
+      }
     }
   },
   computed: {
@@ -100,7 +113,8 @@ export default {
       saveItem: SAVE_OUTCOMECATEGORY
     }),
     ...mapMutations('outcomeCategoryModule', {
-      setItem: SET_OUTCOMECATEGORY
+      setItem: SET_OUTCOMECATEGORY,
+      saveFinish: SAVE_OUTCOMECATEGORY_FINISH
     }),
     goBack () {
       window.history.go(-1)
@@ -119,8 +133,7 @@ export default {
       const result = await _.confirmDialog(title, message, ok, this.$t('dialog_cancel'))
       if (result === 1) {
         this.saveItem({ item: this.item })
-        _.successNotify(this.$t('modify_success_message'))
-        this.goBack()
+        this.saveFinish()
       }
     }
   }
