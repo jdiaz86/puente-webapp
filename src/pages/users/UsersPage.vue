@@ -80,20 +80,19 @@ export default {
         { name: 'lastName', field: 'lastName', label: this.$t('lastname_label'), sortable: true },
         { name: 'email', field: 'email', label: this.$t('email_label'), sortable: true },
         { name: 'country', field: 'country', label: this.$t('country_label'), sortable: true },
-        { name: 'foreign', field: 'foreign', label: this.$t('foreign_label'), sortable: true },
         { name: 'phone', field: 'phone', label: this.$t('phone_label'), sortable: true }
       ]
     }
   },
   created () {
-    this.loadUsers()
+    this.loadItems()
   },
   computed: {
     ...mapState('userModule', ['deleting', 'error', 'items'])
   },
   methods: {
     ...mapActions('userModule', {
-      loadUsers: FETCH_USERS
+      loadItems: FETCH_USERS
     }),
     goBack () {
       window.history.go(-1)
@@ -111,7 +110,7 @@ export default {
       const result = await _.confirmDialog(this.$t('delete_dialog_title'), this.$t('delete_dialog_message'), this.$t('delete_dialog_ok'), this.$t('dialog_cancel'))
       if (result === 1) {
         _.successNotify(this.$t('delete_success_message'))
-        this.loadUsers()
+        this.loadItems()
         this.selected = []
       }
     }

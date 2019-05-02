@@ -6,7 +6,10 @@
         <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="person">
-              <q-input v-model="item.user.username" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('teacher_label')"/>
+              <q-select v-model="item.user" :options="userTeachersOptions" filter dark clearable
+                        :display-value="item.user ? item.user.username : undefined"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('teacher_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
       </div>
@@ -14,7 +17,10 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="school">
-              <q-input v-model="item.course.name" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('course_name_label')"/>
+              <q-select v-model="item.course" :options="coursesOptions" filter dark clearable
+                        :display-value="item.course ? item.course.name + ' - ' + item.course.code : undefined"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('course_name_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
        </div>
@@ -22,7 +28,7 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="calendar_today">
-              <q-input v-model="item.year" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('year_label')"/>
+              <q-datetime v-model="item.date" class="form-control" type="date" format="YYYY" readonly disabled default-view="year" minimal :float-label="$t('year_label')"/>
             </q-field>
           </div>
       </div>
@@ -68,11 +74,12 @@ import {
   QInput,
   QField
 } from 'quasar'
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import {
   FETCH_COURSE_ENROLLMENT,
   SAVE_COURSE_ENROLLMENT,
-  SET_COURSE_ENROLLMENT
+  SET_COURSE_ENROLLMENT,
+  SAVE_COURSE_ENROLLMENT_FINISH
 } from '../../store/types'
 import * as _ from '../../util/util'
 
@@ -91,6 +98,7 @@ export default {
     } else {
       this.setItem({})
       this.editMode = true
+      this.item.date = _.formatDate(new Date())
     }
   },
   data () {
@@ -99,8 +107,18 @@ export default {
       editMode: false
     }
   },
+  watch: {
+    saving: function (val) {
+      if (val) {
+        _.successNotify(this.$t('modify_success_message'))
+        this.goBack()
+      }
+    }
+  },
   computed: {
-    ...mapState('courseEnrollmentModule', ['item', 'saving', 'errors', 'error'])
+    ...mapState('courseEnrollmentModule', ['item', 'saving', 'errors', 'error']),
+    ...mapGetters('userModule', ['userTeachersOptions']),
+    ...mapGetters('courseModule', ['coursesOptions'])
   },
   methods: {
     ...mapActions('courseEnrollmentModule', {
@@ -108,7 +126,8 @@ export default {
       saveItem: SAVE_COURSE_ENROLLMENT
     }),
     ...mapMutations('courseEnrollmentModule', {
-      setItem: SET_COURSE_ENROLLMENT
+      setItem: SET_COURSE_ENROLLMENT,
+      saveFinish: SAVE_COURSE_ENROLLMENT_FINISH
     }),
     goBack () {
       window.history.go(-1)
@@ -127,8 +146,7 @@ export default {
       const result = await _.confirmDialog(title, message, ok, this.$t('dialog_cancel'))
       if (result === 1) {
         this.saveItem({ item: this.item })
-        _.successNotify(this.$t('modify_success_message'))
-        this.goBack()
+        this.saveFinish()
       }
     }
   }

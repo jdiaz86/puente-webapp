@@ -14,7 +14,7 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="code">
-              <q-input v-model="item.code" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('code_label')"/>
+              <q-input v-model="item.code" class="form-control" maxlength="5" :readonly="viewMode" :disabled="viewMode" :float-label="$t('code_label')"/>
             </q-field>
           </div>
        </div>
@@ -22,7 +22,10 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="grade">
-              <q-input v-model="item.grade" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('grade_label')"/>
+              <q-select v-model="item.grade" :options="gradeListOptions" filter dark clearable
+                        :display-value="gradeListOptions[item.grade-1] ? gradeListOptions[item.grade-1].label : ''"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('grade_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
       </div>
@@ -64,7 +67,8 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import {
   FETCH_COURSE,
   SAVE_COURSE,
-  SET_COURSE
+  SET_COURSE,
+  SAVE_COURSE_FINISH
 } from '../../store/types'
 import * as _ from '../../util/util'
 
@@ -88,7 +92,16 @@ export default {
   data () {
     return {
       viewMode: false,
-      editMode: false
+      editMode: false,
+      gradeListOptions: _.gradeOptions()
+    }
+  },
+  watch: {
+    saving: function (val) {
+      if (val) {
+        _.successNotify(this.$t('modify_success_message'))
+        this.goBack()
+      }
     }
   },
   computed: {
@@ -100,7 +113,8 @@ export default {
       saveItem: SAVE_COURSE
     }),
     ...mapMutations('courseModule', {
-      setItem: SET_COURSE
+      setItem: SET_COURSE,
+      saveFinish: SAVE_COURSE_FINISH
     }),
     goBack () {
       window.history.go(-1)
@@ -119,8 +133,7 @@ export default {
       const result = await _.confirmDialog(title, message, ok, this.$t('dialog_cancel'))
       if (result === 1) {
         this.saveItem({ item: this.item })
-        _.successNotify(this.$t('modify_success_message'))
-        this.goBack()
+        this.saveFinish()
       }
     }
   }

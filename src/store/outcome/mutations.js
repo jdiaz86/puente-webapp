@@ -8,7 +8,6 @@ const mutations = {
   [_.SET_OUTCOMES] (state, items) {
     for (let item of items) {
       item.outcomeCategoryName = item.outcomeCategory.name
-      item.username = item.user.username
     }
     state.items = items
   },
