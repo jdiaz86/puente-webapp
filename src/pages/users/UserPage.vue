@@ -129,7 +129,9 @@ export default {
     return {
       countryListOptions: _.countryOptions(),
       stateListOptions: [],
-      country: 'init'
+      country: 'init',
+      viewMode: false,
+      editMode: false
     }
   },
   watch: {

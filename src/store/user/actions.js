@@ -1,5 +1,5 @@
 import * as _ from '../types'
-import { get, put } from '../../api/api'
+import { get, put, post } from '../../api/api'
 
 const users = 'users'
 
@@ -31,14 +31,24 @@ const actions = {
         commit(_.HOME_ERROR, error)
       })
   },
-  [_.SAVE_USER] ({ commit }, { user }) {
-    put(`${users}/me`, user)
-      .then(function (response) {
-        commit(_.SAVE_USER_SUCCESS)
-      })
-      .catch(function (error) {
-        commit(_.SAVE_USER_ERROR, error.response.data)
-      })
+  [_.SAVE_USER] ({ commit }, { item }) {
+    if (item.id) {
+      put(`${users}/${item.id}`, item)
+        .then(function (response) {
+          commit(_.SAVE_USER_SUCCESS)
+        })
+        .catch(function (error) {
+          commit(_.SAVE_USER_ERROR, error.response.data)
+        })
+    } else {
+      post(`${users}/new`, item)
+        .then(function (response) {
+          commit(_.SAVE_USER_SUCCESS)
+        })
+        .catch(function (error) {
+          commit(_.SAVE_USER_ERROR, error.response.data)
+        })
+    }
   },
   [_.SAVE_USER_PASSWORD] ({ commit }, password) {
     put(`${users}/changepassword`, { password })

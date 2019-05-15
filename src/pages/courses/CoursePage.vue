@@ -6,7 +6,10 @@
         <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="school">
-              <q-input v-model="item.name" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('name_label')"/>
+              <q-select v-model="item.name" :options="courseListOptions" filter dark clearable
+                        :display-value="courseListOptions.find(el => el.value === item.name) ? courseListOptions.find(el => el.value === item.name).label : null"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('name_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
       </div>
@@ -93,7 +96,8 @@ export default {
     return {
       viewMode: false,
       editMode: false,
-      gradeListOptions: _.gradeOptions()
+      gradeListOptions: _.gradeOptions(),
+      courseListOptions: _.courseOptions()
     }
   },
   watch: {

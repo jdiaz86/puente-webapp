@@ -18,7 +18,7 @@
           <div class="col-sm-3 col-md-12">
             <q-field icon="school">
               <q-select v-model="item.course" :options="coursesOptions" filter dark clearable
-                        :display-value="item.course ? item.course.name + ' - ' + item.course.code : undefined"
+                        :display-value="item.course ? item.courseName : undefined"
                         :filter-placeholder="$t('search_label')" :float-label="$t('course_name_label')"
                         :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>

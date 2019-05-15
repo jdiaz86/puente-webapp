@@ -6,7 +6,8 @@ module.exports = function (ctx) {
     plugins: [
       'i18n',
       'axios',
-      'vuelidate'
+      'vuelidate',
+      'highcharts-vue'
     ],
     css: [
       'app.styl'
@@ -79,7 +80,17 @@ module.exports = function (ctx) {
         'QRouteTab',
         'QPopover',
         'QTable',
-        'QDatetime'
+        'QDatetime',
+        'QCard',
+        'QCardTitle',
+        'QCardMain',
+        'QCardMedia',
+        'QCardSeparator',
+        'QCardActions',
+        'QBtnGroup',
+        'QBtnDropdown',
+        'QItemTile',
+        'QItemSeparator'
       ],
       directives: [
         'Ripple'
