@@ -1,40 +1,261 @@
 <template>
   <q-page>
-      {{ $t('user_authenticated_sucess') }}
-      <br>
+    <q-card class="actions row row-form">
+      <div class="col-xs-12 col-md-4">
+        <q-select v-model="year" :options="yearListOptions" filter dark clearable class="form-control dashboard-header"
+                        :display-value="yearListOptions[year] ? yearListOptions[year].label : ''"
+                        :filter-placeholder="$t('search_label')" :float-label="$t('year_label')"/>
+      </div>
+      <div class="col-xs-6 col-md-4">
+        <q-datetime v-model="dateInitial" type="date" clearable popover format="DD-MMM-YYYY" float-label="Fecha Inicial" class="dashboard-header"/>
+      </div>
+      <div class="col-xs-6 col-md-4">
+        <q-datetime v-model="dateFinal" type="date" clearable popover format="DD-MMM-YYYY" float-label="Fecha Final" class="dashboard-header"/>
+      </div>
+    </q-card>
+
+      <div id="container">
+        <q-card inline class="fit actions row row-form" ref="graph0">
+          <q-card-title>
+            {{ $t('dashboard_title') }}
+            <div slot="right" class="row items-center">
+              <q-icon name="pie_chart" color="secondary" style="display: none;"/>
+              <q-btn flat round dense icon="expand_less" @click="toggleCardGraph(0)" color="primary"/>
+            </div>
+          </q-card-title>
+          <q-card-main class="expanded">
+          <div class="row row-form">
+            <div class="col-xs-6 hide-on-desktop">
+               <q-btn @click="toggleAll()" icon="swap_vert" color="secondary" class="dashboard-header expand-collapse"/>
+            </div>
+            <div class="col-xs-6 hide-on-desktop">
+               <q-btn @click="toggleCardGraph(0)" icon="search" color="secondary" class="dashboard-header expand-collapse"/>
+            </div>
+
+            <div class="col-xs-6 col-md-3">
+              <q-list color="primary">
+                <q-item>
+                  <q-item-side>
+                    <q-item-tile color="primary" icon="home" />
+                  </q-item-side>
+                  <q-item-main>
+                    <q-item-tile label color="secondary">{{ $t('national_donors') }}</q-item-tile>
+                    <q-item-tile sublabel color="white">15</q-item-tile>
+                  </q-item-main>
+                </q-item>
+                <q-item>
+                  <q-item-side>
+                    <q-item-tile color="primary" icon="public" />
+                  </q-item-side>
+                  <q-item-main>
+                    <q-item-tile label color="secondary">{{ $t('foregin_donors') }}</q-item-tile>
+                    <q-item-tile sublabel color="white">50</q-item-tile>
+                  </q-item-main>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="col-xs-6 col-md-2">
+              <q-list>
+                <q-item>
+                  <q-item-side>
+                    <q-item-tile color="primary" icon="people" />
+                  </q-item-side>
+                  <q-item-main>
+                    <q-item-tile label color="secondary">{{ $t('total_donors') }}</q-item-tile>
+                    <q-item-tile sublabel color="white">5</q-item-tile>
+                  </q-item-main>
+                </q-item>
+                <q-item>
+                  <q-item-side>
+                    <q-item-tile color="primary" icon="supervisor_account" />
+                  </q-item-side>
+                  <q-item-main>
+                    <q-item-tile label color="secondary">{{ $t('total_teachers') }}</q-item-tile>
+                    <q-item-tile sublabel color="white">20</q-item-tile>
+                  </q-item-main>
+                </q-item>
+              </q-list>
+            </div>
+
+            <div class="col-md-2 hide-on-mobile">
+               <q-btn @click="toggleAll()" icon="swap_vert" color="secondary" class="dashboard-header expand-collapse"/>
+               <q-btn @click="toggleCardGraph(0)" icon="search" color="secondary" class="dashboard-header expand-collapse"/>
+            </div>
+
+            <div class="col-xs-6 col-md-2">
+              <q-list>
+                <q-item>
+                  <q-item-side>
+                    <q-item-tile color="primary" icon="attach_money" />
+                  </q-item-side>
+                  <q-item-main>
+                    <q-item-tile label color="secondary">{{ $t('total_incomes') }}</q-item-tile>
+                    <q-item-tile sublabel color="white">{{ 50000 | currency }}</q-item-tile>
+                  </q-item-main>
+                </q-item>
+                <q-item>
+                  <q-item-side>
+                    <q-item-tile color="primary" icon="shopping_cart" />
+                  </q-item-side>
+                  <q-item-main>
+                    <q-item-tile label color="secondary">{{ $t('total_outcomes') }}</q-item-tile>
+                    <q-item-tile sublabel color="white"> {{ 10000 | currency }}</q-item-tile>
+                  </q-item-main>
+                </q-item>
+              </q-list>
+            </div>
+            <div class="col-xs-6 col-md-3">
+              <q-list>
+                <q-item>
+                  <q-item-side>
+                    <q-item-tile color="primary" icon="school" />
+                  </q-item-side>
+                  <q-item-main>
+                    <q-item-tile label color="secondary">{{ $t('assign_courses') }}</q-item-tile>
+                    <q-item-tile sublabel color="white">10</q-item-tile>
+                  </q-item-main>
+                </q-item>
+                <q-item>
+                  <q-item-side>
+                    <q-item-tile color="primary" icon="people" />
+                  </q-item-side>
+                  <q-item-main>
+                    <q-item-tile label color="secondary">{{ $t('students_avg') }}</q-item-tile>
+                    <q-item-tile sublabel color="white">15</q-item-tile>
+                  </q-item-main>
+                </q-item>
+              </q-list>
+            </div>
+          </div>
+          </q-card-main>
+          <q-card-separator />
+        </q-card>
+
+        <q-card inline class="fit row row-form" ref="graph1">
+          <q-card-title>
+            Donaciones y Gastos
+            <div slot="right" class="row items-center">
+              <q-icon name="pie_chart" color="secondary" />
+              <q-btn flat round dense icon="expand_less" @click="toggleCardGraph(1)" color="primary"/>
+              <q-btn flat round dense icon="refresh" color="primary"/>
+            </div>
+          </q-card-title>
+          <q-card-main class="expanded">
+            <line-chart-component />
+          </q-card-main>
+          <q-card-separator />
+        </q-card>
+
+        <q-card inline class="fit row row-form" ref="graph2">
+          <q-card-title>
+            Gastos por Tipo
+            <div slot="right" class="row items-center">
+              <q-icon name="pie_chart" color="secondary" />
+              <q-btn flat round dense icon="expand_less" @click="toggleCardGraph(2)" color="primary"/>
+              <q-btn flat round dense icon="refresh" color="primary"/>
+            </div>
+          </q-card-title>
+          <q-card-main class="expanded">
+            <column-chart-component/>
+          </q-card-main>
+          <q-card-separator />
+        </q-card>
+
+        <q-card inline class="fit row row-form" ref="graph3">
+          <q-card-title>
+            Estudiantes por Asignaciones por Grado
+            <div slot="right" class="row items-center">
+              <q-icon name="pie_chart" color="secondary" />
+              <q-btn flat round dense icon="expand_less" @click="toggleCardGraph(3)" color="primary"/>
+              <q-btn flat round dense icon="refresh" color="primary"/>
+            </div>
+          </q-card-title>
+          <q-card-main class="expanded">
+            <column-chart-component-two/>
+          </q-card-main>
+          <q-card-separator />
+        </q-card>
+      </div>
+
   </q-page>
 </template>
 <script>
 import {
 } from 'quasar'
-// import { mapActions, mapMutations, mapGetters, mapState } from 'vuex'
-import {
-} from '../../store/types'
+import LineChartComponent from '../../components/lineChart'
+import ColumnChartComponent from '../../components/columnChart'
+import ColumnChartComponentTwo from '../../components/columnChartTwo'
+
+import * as _ from '../../util/util'
 
 export default {
   name: 'home-page',
   components: {
+    LineChartComponent,
+    ColumnChartComponent,
+    ColumnChartComponentTwo
   },
   created () {
   },
   data () {
     return {
+      yearListOptions: _.yearOptions(),
+      year: (new Date()).getFullYear(),
+      dateInitial: new Date(new Date().getFullYear(), 0, 1),
+      dateFinal: new Date(new Date().getFullYear(), 11, 31),
+      graphsAmount: 3,
+      expandedAll: true,
+      graph: 'graph'
     }
   },
   watch: {
+    year: function (val) {
+      this.dateInitial = new Date(val, 0, 1)
+      this.dateFinal = new Date(val, 11, 31)
+    }
   },
   computed: {
   },
   methods: {
+    expandCard (refId) {
+      this.$refs[this.graph + refId].$children[1].$el.classList.add('expanded')
+      this.$refs[this.graph + refId].$children[1].$el.classList.remove('shrinked')
+      this.$refs[this.graph + refId].$children[0].$children[1].$children[0].$el.innerHTML = 'expand_less'
+    },
+    shrinkCard (refId) {
+      this.$refs[this.graph + refId].$children[1].$el.classList.remove('expanded')
+      this.$refs[this.graph + refId].$children[1].$el.classList.add('shrinked')
+      this.$refs[this.graph + refId].$children[0].$children[1].$children[0].$el.innerHTML = 'expand_more'
+    },
+    toggleCardGraph (refId) {
+      if (this.$refs[this.graph + refId] !== undefined) {
+        if (this.$refs[this.graph + refId].$children[1].$el.classList.contains('expanded')) {
+          this.shrinkCard(refId)
+        } else {
+          this.expandCard(refId)
+        }
+      }
+    },
+    toggleAll () {
+      for (let i = 1; i <= this.graphsAmount; i++) {
+        if (this.expandedAll) {
+          this.shrinkCard(i)
+        } else {
+          this.expandCard(i)
+        }
+      }
+      this.expandedAll = !this.expandedAll
+    }
+  },
+  filters: {
+    currency: function (number) {
+      return _.currency(number)
+    }
   }
 }
 </script>
 
 <style lang="css">
-  .popNuevaSolicitud {
-    padding: 0 15%
-  }
-
   h3 {
     font-size: 35px;
     margin-left: 0 !important;
@@ -43,45 +264,6 @@ export default {
     margin-top: 0 !important;
     font-weight: 300;
   }
-
-  .q-stepper {
-    box-shadow: none;
-  }
-
-  .q-stepper-header {
-    border: none;
-    box-shadow: none !important;
-  }
-
-  .q-stepper-step-inner {
-    padding: 0;
-  }
-
-  .popNuevaSolicitud .q-input, .popNuevaSolicitud .q-select, .popNuevaSolicitud .q-datetime-range-left, .popNuevaSolicitud .q-datetime-range-right {
-    background: #e7ebf1 !important;
-    border-radius: 5px;
-    padding: 5px 0px 10px 10px;
-    border: 1px solid #bdc8d7;
-    color: #000 !important;
-    box-shadow: none;
-    margin-top: 5px;
-  }
-
-  .popNuevaSolicitud .title {
-    margin-bottom: 5px;
-    margin-top: 10px;
-  }
-
-  .popNuevaSolicitud .q-input:after, .popNuevaSolicitud .q-select:after, .popNuevaSolicitud .q-datetime-range-left:after, .popNuevaSolicitud .q-datetime-range-right:after {
-    color: #207fd1;
-  }
-
-  .modal-content {
-    border-radius: 10px;
-    padding: 30px;
-    max-height: 90vh;
-  }
-
   .btnOrange {
     background: #ff8737 !important;
     border-radius: 5px;
@@ -95,81 +277,63 @@ export default {
     box-shadow: none;
   }
 
-  .popNuevaSolicitud h5 {
-    font-size: 16px;
-  }
-
-  .q-stepper-tab {
-    color: #207fd1;
-  }
-
-  .step-active .q-stepper-dot {
-    background: #207fd1;
-  }
-
   .q-card {
     background: #fff;
+    opacity:0.9;
     border-radius: 10px;
-    height: 255px;
+    margin: 3px 0;
   }
 
-  .containerContent {
-    padding: 0;
-  }
-
-  .numberInCircle {
-    background: #f18f01;
-    float: left;
-    color: #fff;
-    text-align: center;
-    font-size: 12px;
-    line-height: 24px;
-    width: 25px;
-    border-radius: 50px;
-    padding-top: 1px;
-    margin-top: 4px;
+  .q-card.actions {
+    background: #435363;
   }
 
   .q-card-title {
-    border-bottom: 1px solid #79b2e3;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-  }
-
-  .q-card-title em {
     font-style: normal;
     margin-left: 10px;
-    color: #708196;
-  }
-
-  .bigNumber {
-    text-align: center;
-    color: #708196;
-    font-size: 100px;
-    margin-top: 30px;
-  }
-
-  .textBigNumber {
-    margin-top: 10px;
-    font-size: 29px;
-    color: #708196;
-    margin-bottom: 0;
-
-  }
-
-  .q-card-main {
-    padding-bottom: 0;
+    color: #26A69A;
+    border-bottom: 1px solid #79b2e3;
+    margin-bottom: 10px;
   }
 
   .descriptionCotizacion p {
     margin-bottom: 5px;
   }
 
-  .q-card-actions {
-    padding: 0 20px 20px;
+  .expanded {
+    display: block;
   }
 
-  .q-item-label {
-    text-align: left;
+  .shrinked {
+    display: none;
   }
+
+  .dashboard-header {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+  }
+
+  .expand-collapse {
+    width: 100%;
+    padding-top:20px;
+    font-size: 1em;
+  }
+
+  .q-list {
+    border: none;
+  }
+
+  @media (max-width: 767px) {
+    .hide-on-mobile {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hide-on-desktop {
+      display: none;
+    }
+  }
+
 </style>

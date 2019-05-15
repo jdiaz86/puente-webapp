@@ -41,14 +41,12 @@
 
     <q-layout-drawer
       v-model="leftDrawerOpen"
-      :content-class="$q.theme === 'mat' ? 'bg-side' : null"
-    >
+      :content-class="$q.theme === 'mat' ? 'bg-side' : null">
 
       <q-list
         no-border
         link
-        inset-delimiter
-      >
+        inset-delimiter>
 
         <q-list-header>
           <div class="logo"></div>
@@ -291,7 +289,7 @@ export default {
     height: 40px;
     position: absolute;
     right: 3vw;
-    top: 10vh;
+    top: 8vh;
   }
   .avatar{
     width: 30px;

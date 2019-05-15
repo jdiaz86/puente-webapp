@@ -77,7 +77,7 @@ export default {
       columns: [
         { name: 'outcomeCategoryName', field: 'outcomeCategoryName', label: this.$t('outcome_category_name_label'), sortable: true },
         { name: 'date', field: 'date', label: this.$t('date_label'), type: 'date', format: val => _.formatDate(val), sortable: true },
-        { name: 'amount', field: 'amount', label: this.$t('amount_label'), sortable: true },
+        { name: 'amount', field: 'amount', label: this.$t('amount_label'), format: val => _.currency(val), sortable: true },
         { name: 'description', field: 'description', label: this.$t('description_label'), sortable: true },
         { name: 'username', field: 'username', label: this.$t('registered_by_label'), sortable: true }
       ]

@@ -77,6 +77,7 @@ export default {
       columns: [
         { name: 'username', field: 'username', label: this.$t('teacher_label'), align: 'left', sortable: true },
         { name: 'courseName', field: 'courseName', label: this.$t('course_name_label'), align: 'left', sortable: true },
+        { name: 'grade', field: 'grade', label: this.$t('grade_label'), align: 'left', sortable: true },
         { name: 'studentsAmount', field: 'studentsAmount', label: this.$t('students_amount_label'), align: 'left', sortable: true },
         { name: 'date', field: 'date', label: this.$t('year_label'), align: 'left', type: 'date', format: val => _.formatDate(val, 'YYYY'), sortable: true },
         { name: 'description', field: 'description', label: this.$t('description_label'), align: 'left', sortable: true }

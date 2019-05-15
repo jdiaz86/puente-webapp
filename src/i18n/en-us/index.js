@@ -75,5 +75,14 @@ export default {
   teacher_label: 'Teacher',
   course_name_label: 'Course',
   students_amount_label: 'Students',
-  year_label: 'Year'
+  year_label: 'Year',
+  dashboard_title: 'Dashboard',
+  national_donors: 'National Donors',
+  foregin_donors: 'Foreign Donors',
+  total_donors: 'Total Donors',
+  total_teachers: 'Total Teachers',
+  total_incomes: 'Total Incomes',
+  total_outcomes: 'Total Outcomes',
+  assign_courses: 'Assign Courses',
+  students_avg: 'Average Students'
 }

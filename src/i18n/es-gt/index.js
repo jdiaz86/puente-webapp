@@ -75,5 +75,14 @@ export default {
   teacher_label: 'Docente',
   course_name_label: 'Curso',
   students_amount_label: 'Cantidad Estudiantes',
-  year_label: 'Año'
+  year_label: 'Año',
+  dashboard_title: 'Tablero',
+  national_donors: 'Donadores Nacionales',
+  foregin_donors: 'Donadores Extranjeros',
+  total_donors: 'Total Donadores',
+  total_teachers: 'Total Maestros',
+  total_incomes: 'Total Ingresos',
+  total_outcomes: 'Total Egresos',
+  assign_courses: 'Cursos Asignados',
+  students_avg: 'Promedio Estudiantes'
 }

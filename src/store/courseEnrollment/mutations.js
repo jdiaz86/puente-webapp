@@ -1,4 +1,5 @@
 import * as _ from '../types'
+import * as util from '../../util/util'
 
 const mutations = {
   [_.SET_COURSE_ENROLLMENT] (state, item) {
@@ -9,6 +10,7 @@ const mutations = {
     for (let item of items) {
       item.username = item.user.username
       item.courseName = item.course.name
+      item.grade = util.gradeOptions().find(el => el.value === item.course.grade) ? util.gradeOptions().find(el => el.value === item.course.grade).label : null
     }
     state.items = items
   },

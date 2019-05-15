@@ -33,7 +33,7 @@
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
             <q-field icon="local_atm">
-              <q-input v-model="item.amount" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('amount_label')"/>
+              <q-input v-model="item.amount" class="form-control" :readonly="viewMode" :disabled="viewMode" type="number" prefix="Q " :float-label="$t('amount_label')"/>
             </q-field>
           </div>
       </div>

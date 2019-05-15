@@ -62,12 +62,26 @@ export function formatDate (value, format = 'DD-MMM-YYYY') {
 
 export function gradeOptions () {
   return [
-    { value: '1', label: '1ro' },
-    { value: '2', label: '2do' },
-    { value: '3', label: '3ro' },
-    { value: '4', label: '4to' },
-    { value: '5', label: '5to' },
-    { value: '6', label: '6to' }
+    { value: 1, label: '1ro Primaria' },
+    { value: 2, label: '2do Primaria' },
+    { value: 3, label: '3ro Primaria' },
+    { value: 4, label: '4to Primaria' },
+    { value: 5, label: '5to Primaria' },
+    { value: 6, label: '6to Primaria' },
+    { value: 7, label: '1ro Basico' },
+    { value: 8, label: '2do Básico' },
+    { value: 9, label: '3ro Básico' }
+  ]
+}
+
+export function courseOptions () {
+  return [
+    { value: 'Matemática', label: 'Matemática' },
+    { value: 'Lenguaje', label: 'Lenguaje' },
+    { value: 'Ciencias Naturales', label: 'Ciencias Naturales' },
+    { value: 'Física', label: 'Física' },
+    { value: 'Estudios Sociales', label: 'Estudios Sociales' },
+    { value: 'Emprendimiento', label: 'Emprendimiento' }
   ]
 }
 
@@ -86,10 +100,28 @@ export function categoryTypeOptions () {
   ]
 }
 
+export function yearOptions () {
+  return [
+    { value: 2017, label: '2017' },
+    { value: 2018, label: '2018' },
+    { value: 2019, label: '2019' },
+    { value: 2020, label: '2020' },
+    { value: 2021, label: '2021' },
+    { value: 2022, label: '2022' }
+  ]
+}
+
 export function countryOptions () {
   return countries.map(country => ({ label: country.country, value: country.country }))
 }
 
 export function stateOptions (countryState = 'Guatemala') {
   return countries.filter(country => country.country === countryState)[0].states.map(state => ({ label: state, value: state }))
+}
+
+export function currency (number, currency = 'Q') {
+  if (!number) {
+    return currency + ' ' + '0.0'
+  }
+  return currency + ' ' + Number(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
 }
