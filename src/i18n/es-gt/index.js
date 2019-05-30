@@ -84,5 +84,7 @@ export default {
   total_incomes: 'Total Ingresos',
   total_outcomes: 'Total Egresos',
   assign_courses: 'Cursos Asignados',
-  students_avg: 'Promedio Estudiantes'
+  students_avg: 'Promedio Estudiantes por Curso',
+  roles_label: 'Roles',
+  role_label: 'Rol'
 }

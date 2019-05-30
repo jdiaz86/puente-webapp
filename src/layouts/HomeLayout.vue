@@ -96,6 +96,12 @@
           <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
+        <q-item @click.native="$router.push('/timelines')">
+          <q-item-side icon="timeline" />
+          <q-item-main :label="$t('timelines_menu')" />
+          <q-item-side right icon="subdirectory_arrow_right" />
+        </q-item>
+
         <q-item @click.native="logout()">
           <q-item-side icon="account_circle" />
           <q-item-main :label="$t('logout')" />
@@ -123,7 +129,7 @@
                 </q-item>
             </q-list>
             <q-list link>
-                <q-item item highlight to="/user" exact>
+                <q-item item highlight to="/users/login" exact>
                     <q-item-side icon="person" color="grey" />
                     <q-item-main :label="$t('person_label')" />
                 </q-item>
@@ -151,15 +157,15 @@
           slot="title"
         />
         <q-route-tab
-          icon="input"
-          to="/login"
-          name="login"
+          icon="timeline"
+          to="/timeline"
+          name="timeline"
           slot="title"
         />
         <q-route-tab
           icon="account_box"
-          to="/register"
-          name="register"
+          to="/users/login"
+          name="loginuser"
           slot="title"
         />
       </q-tabs>
@@ -217,7 +223,6 @@ export default {
     ...mapState('userModule', ['item', 'loginUser']),
     ...mapState('loginModule', ['authenticated']),
     ...mapGetters('userModule', ['isAdmin', 'isDonor', 'isTeacher'])
-
   },
   methods: {
     ...mapActions('homeModule', {
