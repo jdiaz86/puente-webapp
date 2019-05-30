@@ -2,44 +2,30 @@
   <div>
     <form name="myForm" class="css-form-item-page" novalidate>
       <fieldset>
-        <legend><h3 class="legend-title">{{ $t('course_enrollment_screen_title') }}</h3></legend>
+        <legend><h3 class="legend-title">{{ $t('timeline_screen_title') }}</h3></legend>
         <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="person">
-              <q-select v-model="item.user" :options="userTeachersOptions" filter dark clearable
-                        :display-value="item.user ? item.user.username : undefined"
-                        :filter-placeholder="$t('search_label')" :float-label="$t('teacher_label')"
-                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
+            <q-field icon="calendar_today">
+              <q-datetime v-model="item.date" type="date" clearable format="DD-MMM-YYYY" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('date_label')"/>
             </q-field>
           </div>
       </div>
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="school">
-              <q-select v-model="item.course" :options="coursesOptions" filter dark clearable
-                        :display-value="item.course ? item.course.name : undefined"
-                        :filter-placeholder="$t('search_label')" :float-label="$t('course_name_label')"
-                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
+            <q-field icon="code">
+              <q-input v-model="item.title" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('title_label')"/>
             </q-field>
           </div>
        </div>
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="calendar_today">
-              <q-datetime v-model="item.date" class="form-control" type="date" format="YYYY" readonly disabled default-view="year" minimal :float-label="$t('year_label')"/>
+            <q-field icon="code">
+              <q-input v-model="item.icon" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('icon_label')"/>
             </q-field>
           </div>
-      </div>
-
-      <div class="row row-form">
-          <div class="col-sm-3 col-md-12">
-            <q-field icon="group">
-              <q-input v-model="item.studentsAmount" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('students_amount_label')"/>
-            </q-field>
-          </div>
-      </div>
+       </div>
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
@@ -74,17 +60,17 @@ import {
   QInput,
   QField
 } from 'quasar'
-import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import {
-  FETCH_COURSE_ENROLLMENT,
-  SAVE_COURSE_ENROLLMENT,
-  SET_COURSE_ENROLLMENT,
-  SAVE_COURSE_ENROLLMENT_FINISH
+  FETCH_TIMELINE,
+  SAVE_TIMELINE,
+  SET_TIMELINE,
+  SAVE_TIMELINE_FINISH
 } from '../../store/types'
 import * as _ from '../../util/util'
 
 export default {
-  name: 'courseEnrollmentPage',
+  name: 'timelinePage',
   components: {
     QBtn,
     QInput,
@@ -98,7 +84,6 @@ export default {
     } else {
       this.setItem({})
       this.editMode = true
-      this.item.date = _.formatDate(new Date())
     }
   },
   data () {
@@ -116,18 +101,16 @@ export default {
     }
   },
   computed: {
-    ...mapState('courseEnrollmentModule', ['item', 'saving', 'errors', 'error']),
-    ...mapGetters('userModule', ['userTeachersOptions']),
-    ...mapGetters('courseModule', ['coursesOptions'])
+    ...mapState('timelineModule', ['item', 'saving', 'errors', 'error'])
   },
   methods: {
-    ...mapActions('courseEnrollmentModule', {
-      loadItem: FETCH_COURSE_ENROLLMENT,
-      saveItem: SAVE_COURSE_ENROLLMENT
+    ...mapActions('timelineModule', {
+      loadItem: FETCH_TIMELINE,
+      saveItem: SAVE_TIMELINE
     }),
-    ...mapMutations('courseEnrollmentModule', {
-      setItem: SET_COURSE_ENROLLMENT,
-      saveFinish: SAVE_COURSE_ENROLLMENT_FINISH
+    ...mapMutations('timelineModule', {
+      setItem: SET_TIMELINE,
+      saveFinish: SAVE_TIMELINE_FINISH
     }),
     goBack () {
       window.history.go(-1)
@@ -145,6 +128,7 @@ export default {
       }
       const result = await _.confirmDialog(title, message, ok, this.$t('dialog_cancel'))
       if (result === 1) {
+        this.item.date = _.formatDate(this.item.date)
         this.saveItem({ item: this.item })
         this.saveFinish()
       }

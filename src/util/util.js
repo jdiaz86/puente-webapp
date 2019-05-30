@@ -125,3 +125,41 @@ export function currency (number, currency = 'Q') {
   }
   return currency + ' ' + Number(number).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
 }
+
+export function generateDateAxisGraph (startDate, endDate) {
+  let _break = false
+  let i = 0
+  let finishDate
+  endDate = formatDate(new Date(endDate.getFullYear(), endDate.getMonth() + i, 1), 'MMM-YY')
+  let dateArray = []
+  while (!_break) {
+    finishDate = formatDate(new Date(startDate.getFullYear(), startDate.getMonth() + i, 1), 'MMM-YY')
+    dateArray.push(finishDate)
+    if (finishDate === endDate) {
+      _break = true
+    }
+    i++
+  }
+
+  return dateArray
+}
+
+export function defaultChartOptions (type, yAxisTitle, tooltip, xAxisCategories, series, title = '', subtitle = '') {
+  return {
+    chart: { type },
+    title: { text: title },
+    subtitle: { text: subtitle },
+    xAxis: { categories: xAxisCategories },
+    yAxis: { title: { text: yAxisTitle } },
+    tooltip,
+    series
+  }
+}
+
+export function getEntityById (array, id) {
+  return array.filter(obj => obj.id === id)[0]
+}
+
+export function removeUndefined (array) {
+  return array.filter(obj => obj !== undefined)
+}

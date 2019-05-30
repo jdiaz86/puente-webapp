@@ -70,7 +70,7 @@ import {
 } from 'quasar'
 import { mapState, mapActions } from 'vuex'
 import { required, minLength } from 'vuelidate/lib/validators'
-import { AUTHENTICATE, FETCH_LOGGED_IN_USER, FETCH_USERS } from '../store/types'
+import { AUTHENTICATE, FETCH_LOGGED_IN_USER, FETCH_USERS, FETCH_ROLES } from '../store/types'
 import * as _ from '../util/util'
 
 export default {
@@ -112,6 +112,7 @@ export default {
         this.$router.push('/')
         this.loadLoggedInUser()
         this.loadUsers()
+        this.loadRoles()
         _.successNotify(this.$t('user_authenticated_sucess'))
         _.hideLoading()
       }
@@ -127,6 +128,9 @@ export default {
     }),
     ...mapActions('loginModule', {
       authenticate: AUTHENTICATE
+    }),
+    ...mapActions('roleModule', {
+      loadRoles: FETCH_ROLES
     }),
     loginUser () {
       this.$v.login.$touch()

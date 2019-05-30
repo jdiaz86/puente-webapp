@@ -39,16 +39,24 @@ const routes = [
         component: load('home/HomePage')
       },
       {
+        path: '/timelines',
+        component: load('timeline/TimelinesPage')
+      },
+      {
+        path: '/timelines/:id',
+        component: load('timeline/TimelinePage')
+      },
+      {
+        path: '/timeline',
+        component: load('timeline/TimelineViewPage')
+      },
+      {
         path: '/roles',
         component: load('roles/RolesPage')
       },
       {
         path: '/role/:id?',
         component: load('roles/RolePage')
-      },
-      {
-        path: '/user',
-        component: load('users/LogInUserPage')
       },
       {
         path: '/users/new',

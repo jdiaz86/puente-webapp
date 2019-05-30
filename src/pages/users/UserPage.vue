@@ -69,7 +69,17 @@
           </div>
           <div class="col-sm-3 col-md-6">
             <q-field icon="perm_identity">
-              <q-input v-model="item.status.name" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('status_label')"/>
+              <q-input v-model="item.status.name" class="form-control" readonly disabled :float-label="$t('status_label')"/>
+            </q-field>
+          </div>
+      </div>
+
+      <div class="row row-form">
+          <div class="col-sm-3 col-md-6">
+            <q-field icon="supervised_user_circle">
+              <q-select v-model="userRoles" :options="rolesOptions" filter dark clearable multiple chips
+                        :filter-placeholder="$t('search_label')" :float-label="$t('roles_label')"
+                        :readonly="viewMode" :disabled="viewMode" class="form-control"/>
             </q-field>
           </div>
       </div>
@@ -99,12 +109,13 @@ import {
   QInput,
   QField
 } from 'quasar'
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import {
   FETCH_USER,
   SAVE_USER,
   SET_USER,
-  SAVE_USER_FINISH
+  SAVE_USER_FINISH,
+  FETCH_LOGGED_IN_USER
 } from '../../store/types'
 import * as _ from '../../util/util'
 
@@ -118,11 +129,15 @@ export default {
   created () {
     this.$route.query.mode === 'view' ? this.viewMode = true : this.viewMode = false
     this.$route.query.mode === 'edit' ? this.editMode = true : this.editMode = false
-    if (this.$route.params.id && this.$route.params.id !== 'new') {
-      this.loadItem(this.$route.params.id)
-    } else {
-      this.setItem({})
+    if (this.$route.params.id && (this.$route.params.id === 'new' || this.$route.params.id === 'login')) {
+      if (this.$route.params.id === 'login') {
+        this.loadLoggedInUser()
+      } else {
+        this.setItem({})
+      }
       this.editMode = true
+    } else {
+      this.loadItem(this.$route.params.id)
     }
   },
   data () {
@@ -131,11 +146,16 @@ export default {
       stateListOptions: [],
       country: 'init',
       viewMode: false,
-      editMode: false
+      editMode: false,
+      userRoles: []
     }
   },
   watch: {
+    loginUser: function (val) {
+      this.setItem(val)
+    },
     item: function (val) {
+      val.roles.forEach(role => this.userRoles.push(role.id))
       this.country = val.country
       this.stateListOptions = _.stateOptions(this.country)
     },
@@ -154,12 +174,14 @@ export default {
     }
   },
   computed: {
-    ...mapState('userModule', ['item', 'saving', 'errors', 'error'])
+    ...mapState('userModule', ['loginUser', 'item', 'saving', 'errors', 'error']),
+    ...mapGetters('roleModule', ['rolesOptions', 'roleList'])
   },
   methods: {
     ...mapActions('userModule', {
       loadItem: FETCH_USER,
-      saveItem: SAVE_USER
+      saveItem: SAVE_USER,
+      loadLoggedInUser: FETCH_LOGGED_IN_USER
     }),
     ...mapMutations('userModule', {
       setItem: SET_USER,
@@ -181,6 +203,10 @@ export default {
       }
       const result = await _.confirmDialog(title, message, ok, this.$t('dialog_cancel'))
       if (result === 1) {
+        let roles = []
+        this.userRoles.forEach(role => { roles.push(_.getEntityById(this.roleList, role)) })
+        roles = _.removeUndefined(roles)
+        this.item.roles = roles
         this.saveItem({ item: this.item })
         this.saveFinish()
       }
