@@ -24,10 +24,11 @@ const mutations = {
     state.item = item
   },
   [_.SET_USERS] (state, items) {
-    /* for (let user of users) {
-      user.userStatusName = user.userStatus.name
-      user.userStatusId = user.userStatus.id
-    } */
+    for (let item of items) {
+      item.rolesAssigned = ''
+      item.roles.forEach(el => { item.rolesAssigned += el.code + ', ' })
+      item.rolesAssigned = item.rolesAssigned.substr(0, item.rolesAssigned.length - 2)
+    }
     state.items = items
   },
   [_.USER_ERROR] (state, error) {

@@ -38,12 +38,10 @@ export function authenticate (username, password) {
     username: process.env.OAUTH_CLIENT,
     password: process.env.OAUTH_CLIENT_KEY
   }
-
   const authConfig = {
     withCredentials: true,
     auth
   }
-
   return Vue.prototype.$axios.post(`oauth/token?grant_type=password&username=${username}&password=${password}`, {}, authConfig)
 }
 
@@ -51,8 +49,8 @@ export function logout () {
   return post('users/logout')
 }
 
-export function get (endpoint, param = '') {
-  return Vue.prototype.$axios.get(`${api}${endpoint}/${param}`, getConfigToken())
+export function get (endpoint, param = '', reqs = '') {
+  return Vue.prototype.$axios.get(`${api}${endpoint}/${param}${reqs}`, getConfigToken())
 }
 
 export function post (endpoint, body) {
@@ -65,6 +63,17 @@ export function put (endpoint, body) {
 
 export function del (endpoint) {
   return Vue.prototype.$axios.delete(`${api}${endpoint}/`, getConfigToken())
+}
+
+export function getRequestParam (object) {
+  let requestParam = '?'
+  for (let name in object) {
+    requestParam += name + '=' + object[name] + '&'
+  }
+  if (requestParam.slice(-1) === '&') {
+    requestParam = requestParam.slice(0, -1)
+  }
+  return requestParam
 }
 
 /* function openInNewTab (url) {

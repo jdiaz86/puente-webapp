@@ -13,6 +13,9 @@ import outcomeModule from './outcome'
 import incomeModule from './income'
 import courseEnrollmentModule from './courseEnrollment'
 import coursePlanningModule from './coursePlanning'
+import dashboardModule from './dashboard'
+import roleModule from './role'
+import timelineModule from './timeline'
 
 Vue.use(Vuex)
 
@@ -36,7 +39,10 @@ export default function (/* { ssrContext } */) {
       outcomeModule,
       incomeModule,
       courseEnrollmentModule,
-      coursePlanningModule
+      coursePlanningModule,
+      dashboardModule,
+      roleModule,
+      timelineModule
     },
     plugins: [vuexLocal.plugin]
   })
