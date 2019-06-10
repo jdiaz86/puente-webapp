@@ -10,6 +10,13 @@ function getConfigToken () {
   }
 }
 
+function getConfigTokenPDF () {
+  return {
+    responseType: 'arraybuffer',
+    headers: { 'Authorization': `bearer ${getAccessToken()}`, 'Accept': 'application/pdf' }
+  }
+}
+
 function getAccessToken () {
   let token = LocalStorage.get.item('token')
   if (!token) {
@@ -55,6 +62,10 @@ export function get (endpoint, param = '', reqs = '') {
 
 export function post (endpoint, body) {
   return Vue.prototype.$axios.post(`${api}${endpoint}/`, body, getConfigToken())
+}
+
+export function postPDF (endpoint, body) {
+  return Vue.prototype.$axios.post(`${api}${endpoint}/`, body, getConfigTokenPDF())
 }
 
 export function put (endpoint, body) {

@@ -8,7 +8,7 @@
         <q-btn color="secondary" class="full-width" @click="goBack()" icon="keyboard_backspace"/>
       </div>
       <div class="col-sm-2 col-md-1">
-        <q-btn color="primary" class="full-width" icon="assignment_turned_in" @click="add()"/>
+        <q-btn color="primary" class="full-width" icon="add_box" @click="add()"/>
       </div>
     </div>
     <br>
@@ -16,13 +16,14 @@
       :data="items"
       :columns="columns"
       :filter="filter"
-      :separator="separator"
+      :separator="dataTable.separator"
+      :pagination.sync="dataTable.pagination"
+      :selected.sync="selected"
+      :selection="dataTable.selection"
       row-key="id"
       color="secondary"
-      :selected.sync="selected"
-      selection="single"
-      dark
       dense
+      dark
       id="custom-table">
       <template slot="top-left" slot-scope="props">
         <q-search
@@ -42,7 +43,7 @@
         />
       </template>
       <template slot="top-selection" slot-scope="props">
-        <q-btn color="info" flat round :icon="props.inFullscreen ? 'view_module' : 'view_module'" @click="view(selected[0].id)" />
+        <q-btn color="info" flat round :icon="props.inFullscreen ? 'visibility' : 'visibility'" @click="view(selected[0].id)" />
         <q-btn color="positive" flat round icon="edit" @click="edit(selected[0].id)"/>
         <q-btn color="negative" flat round icon="delete" @click="del(selected[0].id)" />
       </template>
@@ -71,7 +72,7 @@ export default {
   },
   data () {
     return {
-      separator: 'horizontal',
+      dataTable: _.dataTable(),
       filter: '',
       selected: [],
       columns: [
