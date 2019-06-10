@@ -43,69 +43,58 @@
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-side' : null">
 
-      <q-list
+      <q-list class="left-side"
         no-border
         link
         inset-delimiter>
 
         <q-list-header>
           <div class="logo"></div>
-          <p v-html="$t('welcome_user', { name: loginUser.firstName })"></p>
-
         </q-list-header>
 
         <q-item @click.native="$router.push('/')">
           <q-item-side icon="insert_chart" />
           <q-item-main label="Dashboard" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item @click.native="$router.push('/users')">
           <q-item-side icon="group" />
           <q-item-main :label="$t('users_menu')" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item @click.native="$router.push('/courses')">
           <q-item-side icon="school" />
           <q-item-main :label="$t('courses_menu')" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item @click.native="$router.push('/courseEnrollments')">
           <q-item-side icon="assignment" />
           <q-item-main :label="$t('course_enrollments_menu')" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item @click.native="$router.push('/outcomeCategorys')">
           <q-item-side icon="category" />
           <q-item-main :label="$t('outcome_categories_menu')" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item @click.native="$router.push('/incomes')">
           <q-item-side icon="attach_money" />
           <q-item-main :label="$t('incomes_menu')" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item @click.native="$router.push('/outcomes')">
           <q-item-side icon="shopping_cart" />
           <q-item-main :label="$t('outcomes_menu')" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item @click.native="$router.push('/timelines')">
           <q-item-side icon="timeline" />
           <q-item-main :label="$t('timelines_menu')" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item @click.native="logout()">
-          <q-item-side icon="account_circle" />
+          <q-item-side icon="exit_to_app" />
           <q-item-main :label="$t('logout')" />
-          <q-item-side right icon="subdirectory_arrow_right" />
         </q-item>
 
         <q-item link class="fixed-bottom">
@@ -265,6 +254,9 @@ export default {
     background: #ff6600;
     height: 50px;
   }
+  .left-side .q-item-main{
+    text-align: justify;
+   }
    .q-item-main{
     font-size: 13px;
     text-align: center;

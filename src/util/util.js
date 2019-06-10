@@ -163,3 +163,13 @@ export function getEntityById (array, id) {
 export function removeUndefined (array) {
   return array.filter(obj => obj !== undefined)
 }
+
+export function dataTable () {
+  return {
+    pagination: {
+      rowsPerPage: 15
+    },
+    separator: 'horizontal',
+    selection: 'single'
+  }
+}

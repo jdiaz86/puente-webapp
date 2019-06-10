@@ -10,7 +10,7 @@ export default {
   bad_credentials_error: 'Credenciales inválidas, vuelve a intentar.',
   network_access_error: 'Existe un problema con la red, por favor intente más tarde.',
   welcome_user: 'Bienvenido <strong>{name}</strong> a ' + process.env.APP_NAME,
-  about_us_side: 'Para más información, visítanos en: <a target="_blank" href="//' + process.env.URL_APP + '">' + process.env.APP_NAME + ' </a>',
+  about_us_side: '<a target="_blank" href="//' + process.env.URL_APP + '">' + process.env.APP_NAME + ' </a>',
   app_name: process.env.APP_NAME,
   app_subtitle: 'Cambiando vidas un niño a la vez.',
   username_label: 'Usuario',
@@ -86,5 +86,9 @@ export default {
   assign_courses: 'Cursos Asignados',
   students_avg: 'Promedio Estudiantes por Curso',
   roles_label: 'Roles',
-  role_label: 'Rol'
+  role_label: 'Rol',
+  timelines_menu: 'Gestión Línea de Tiempo',
+  title_label: 'Título',
+  icon_label: 'Ícono',
+  timeline_screen_title: 'Artículo Línea de Tiempo'
 }

@@ -142,13 +142,12 @@ export default {
         }
       } else {
         _.showLoading(this.$t('loading'))
+        _.setStorage('username', this.login.username)
         if (this.login.rememberMe && this.login.rememberMe === true) {
           _.setStorage('rememberMe', true)
-          _.setStorage('username', this.login.username)
           _.setStorage('password', this.login.password)
         } else {
           _.removeStorage('rememberMe')
-          _.removeStorage('username')
           _.removeStorage('password')
         }
         this.$emit('onLogin', this.login)

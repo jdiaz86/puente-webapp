@@ -79,7 +79,7 @@
 
             <div class="col-md-2 hide-on-mobile">
                <q-btn @click="toggleAll()" icon="swap_vert" color="secondary" class="dashboard-header expand-collapse"/>
-               <q-btn @click="refresh()" icon="search" color="secondary" class="dashboard-header expand-collapse"/>
+               <q-btn @click="refresh()" icon="refresh" color="secondary" class="dashboard-header expand-collapse"/>
             </div>
 
             <div class="col-xs-6 col-md-2">
@@ -133,11 +133,11 @@
 
         <q-card inline class="fit row row-form" ref="graph1">
           <q-card-title>
-            Donaciones y Gastos
+            {{ graphsArray[0].title }}
             <div slot="right" class="row items-center">
               <q-icon name="pie_chart" color="secondary" />
               <q-btn flat round dense icon="expand_less" @click="toggleCardGraph(1)" color="primary"/>
-              <q-btn flat round dense icon="refresh" color="primary"/>
+              <q-btn flat round dense icon="library_books" @click="downloadExcelGraph(1)" color="primary"/>
             </div>
           </q-card-title>
           <q-card-main class="expanded">
@@ -148,11 +148,11 @@
 
         <q-card inline class="fit row row-form" ref="graph2">
           <q-card-title>
-            Gastos por Tipo
+            {{ graphsArray[1].title }}
             <div slot="right" class="row items-center">
               <q-icon name="pie_chart" color="secondary" />
               <q-btn flat round dense icon="expand_less" @click="toggleCardGraph(2)" color="primary"/>
-              <q-btn flat round dense icon="refresh" color="primary"/>
+              <q-btn flat round dense icon="library_books" @click="downloadExcelGraph(2)" color="primary"/>
             </div>
           </q-card-title>
           <q-card-main class="expanded">
@@ -163,11 +163,11 @@
 
         <q-card inline class="fit row row-form" ref="graph3">
           <q-card-title>
-            Estudiantes por Asignaciones por Grado
+            {{ graphsArray[2].title }}
             <div slot="right" class="row items-center">
               <q-icon name="pie_chart" color="secondary" />
               <q-btn flat round dense icon="expand_less" @click="toggleCardGraph(3)" color="primary"/>
-              <q-btn flat round dense icon="refresh" color="primary"/>
+              <q-btn flat round dense icon="library_books" @click="downloadExcelGraph(3)" color="primary"/>
             </div>
           </q-card-title>
           <q-card-main class="expanded">
@@ -184,7 +184,8 @@ import {
 } from 'quasar'
 import { mapActions, mapState } from 'vuex'
 import {
-  FETCH_USER_STATS
+  FETCH_USER_STATS,
+  FETCH_DODWNLOAD_STATS
 } from '../../store/types'
 import LineChartComponent from '../../components/lineChart'
 import ColumnChartComponent from '../../components/columnChart'
@@ -213,7 +214,12 @@ export default {
       graph: 'graph',
       optionsLineChart: {},
       optionsColumnTwoChart: {},
-      optionsColumnChart: {}
+      optionsColumnChart: {},
+      gradesByName: ['1ro Primaria', '2do Primaria', '3ro Primaria', '4to Primaria', '5to Primaria', '6to Primaria', '1ro Básico', '2do Básico', '3ro Básico'],
+      graphsArray: [{ title: 'Donaciones y Gastos', name: 'incomesVsOutcomesByMonth' },
+        { title: 'Gastos por Tipo', name: 'outcomeByTypeAndMonth' },
+        { title: 'Estudiantes por Asignaciones por Grado', name: 'coursesByGradeAndTime' }],
+      graphDto: {}
     }
   },
   watch: {
@@ -252,7 +258,7 @@ export default {
           shared: true,
           useHTML: true
         },
-        ['1ro Primaria', '2do Primaria', '3ro Primaria', '4to Primaria', '5to Primaria', '6to Primaria', '1ro Básico', '2do Básico', '3ro Básico'],
+        this.gradesByName,
         userStats.coursesByGradeAndTime)
     }
   },
@@ -261,7 +267,8 @@ export default {
   },
   methods: {
     ...mapActions('dashboardModule', {
-      fetchUserStats: FETCH_USER_STATS
+      fetchUserStats: FETCH_USER_STATS,
+      downloadReportStats: FETCH_DODWNLOAD_STATS
     }),
     expandCard (refId) {
       this.$refs[this.graph + refId].$children[1].$el.classList.add('expanded')
@@ -281,6 +288,20 @@ export default {
           this.expandCard(refId)
         }
       }
+    },
+    downloadExcelGraph (refId) {
+      let cols
+      const graph = this.graphsArray[refId - 1]
+      this.graphDto = { series: this.userStats[graph.name], title: graph.title, time: _.formatDate(new Date()), username: _.getStorage('username'), sponsor: process.env.APP_NAME }
+      // graph 3, courses by grade
+      if (refId === 3) {
+        cols = this.gradesByName
+      } else {
+        cols = _.generateDateAxisGraph(this.dateInitial, this.dateFinal)
+      }
+      this.graphDto.cols = cols
+      this.downloadReportStats({ graphDto: this.graphDto })
+      console.log(this.graphDto)
     },
     toggleAll () {
       for (let i = 1; i <= this.graphsAmount; i++) {
