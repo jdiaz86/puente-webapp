@@ -10,7 +10,7 @@ export default {
   bad_credentials_error: 'Bad credentials, please try again',
   network_access_error: 'There is a network error, please try again later',
   welcome_user: 'Welcome <strong>{name}</strong> to ' + process.env.APP_NAME,
-  about_us_side: 'For more information, please visit us at <a target="_blank" href="//' + process.env.URL_APP + '">' + process.env.APP_NAME + ' </a>',
+  about_us_side: '<a target="_blank" href="//' + process.env.URL_APP + '">' + process.env.APP_NAME + ' </a>',
   app_name: process.env.APP_NAME,
   app_subtitle: 'Changing lives one step at a time',
   username_label: 'User',
@@ -86,5 +86,9 @@ export default {
   assign_courses: 'Assign Courses',
   students_avg: 'Average Students per Course',
   roles_label: 'Roles',
-  role_label: 'Role'
+  role_label: 'Role',
+  timelines_menu: 'Timeline',
+  title_label: 'Title',
+  icon_label: 'Icon',
+  timeline_screen_title: 'Timeline Entry'
 }

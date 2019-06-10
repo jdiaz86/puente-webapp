@@ -13,7 +13,7 @@
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="code">
+            <q-field icon="title">
               <q-input v-model="item.title" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('title_label')"/>
             </q-field>
           </div>
@@ -21,7 +21,7 @@
 
       <div class="row row-form">
           <div class="col-sm-3 col-md-12">
-            <q-field icon="code">
+            <q-field icon="sentiment_very_satisfied">
               <q-input v-model="item.icon" class="form-control" :readonly="viewMode" :disabled="viewMode" :float-label="$t('icon_label')"/>
             </q-field>
           </div>
