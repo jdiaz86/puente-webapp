@@ -57,37 +57,37 @@
           <q-item-main label="Dashboard" />
         </q-item>
 
-        <q-item @click.native="$router.push('/users')">
+        <q-item @click.native="$router.push('/users')" v-if="isAdmin">
           <q-item-side icon="group" />
           <q-item-main :label="$t('users_menu')" />
         </q-item>
 
-        <q-item @click.native="$router.push('/courses')">
+        <q-item @click.native="$router.push('/courses')" v-if="isAdmin || isTeacher">
           <q-item-side icon="school" />
           <q-item-main :label="$t('courses_menu')" />
         </q-item>
 
-        <q-item @click.native="$router.push('/courseEnrollments')">
+        <q-item @click.native="$router.push('/courseEnrollments')" v-if="isAdmin || isTeacher">
           <q-item-side icon="assignment" />
           <q-item-main :label="$t('course_enrollments_menu')" />
         </q-item>
 
-        <q-item @click.native="$router.push('/outcomeCategorys')">
-          <q-item-side icon="category" />
-          <q-item-main :label="$t('outcome_categories_menu')" />
-        </q-item>
-
-        <q-item @click.native="$router.push('/incomes')">
+        <q-item @click.native="$router.push('/incomes')" v-if="!isTeacher">
           <q-item-side icon="attach_money" />
           <q-item-main :label="$t('incomes_menu')" />
         </q-item>
 
-        <q-item @click.native="$router.push('/outcomes')">
+        <q-item @click.native="$router.push('/outcomes')" v-if="isAdmin">
           <q-item-side icon="shopping_cart" />
           <q-item-main :label="$t('outcomes_menu')" />
         </q-item>
 
-        <q-item @click.native="$router.push('/timelines')">
+        <q-item @click.native="$router.push('/outcomeCategorys')" v-if="isAdmin">
+          <q-item-side icon="category" />
+          <q-item-main :label="$t('outcome_categories_menu')" />
+        </q-item>
+
+        <q-item @click.native="$router.push('/timelines')" v-if="isAdmin">
           <q-item-side icon="timeline" />
           <q-item-main :label="$t('timelines_menu')" />
         </q-item>
