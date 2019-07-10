@@ -7,7 +7,7 @@
       <div class="col-sm-2 col-md-1">
         <q-btn color="secondary" class="full-width" @click="goBack()" icon="keyboard_backspace"/>
       </div>
-      <div class="col-sm-2 col-md-1">
+      <div class="col-sm-2 col-md-1" v-if="isAdmin">
         <q-btn color="primary" class="full-width" icon="add_box" @click="add()"/>
       </div>
     </div>
@@ -44,8 +44,8 @@
       </template>
       <template slot="top-selection" slot-scope="props">
         <q-btn color="info" flat round :icon="props.inFullscreen ? 'visibility' : 'visibility'" @click="view(selected[0].id)" />
-        <q-btn color="positive" flat round icon="edit" @click="edit(selected[0].id)"/>
-        <q-btn color="negative" flat round icon="delete" @click="del(selected[0].id)" />
+        <q-btn color="positive" flat round icon="edit" @click="edit(selected[0].id)" v-if="isAdmin"/>
+        <q-btn color="negative" flat round icon="delete" @click="del(selected[0].id)" v-if="isAdmin" />
       </template>
     </q-table>
   </div>
@@ -57,9 +57,9 @@ import {
   QSearch,
   QBtn
 } from 'quasar'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import {
-  FETCH_INCOMES
+  FETCH_INCOMES, FETCH_INCOMES_BY_ID
 } from '../../store/types'
 import * as _ from '../../util/util'
 
@@ -85,14 +85,20 @@ export default {
     }
   },
   created () {
-    this.loadItems()
+    if (!this.isAdmin && this.isDonor) {
+      this.loadItemsById(this.userId)
+    } else {
+      this.loadItems()
+    }
   },
   computed: {
-    ...mapState('incomeModule', ['deleting', 'error', 'items'])
+    ...mapState('incomeModule', ['deleting', 'error', 'items']),
+    ...mapGetters('userModule', ['isAdmin', 'isDonor', 'isTeacher', 'userId'])
   },
   methods: {
     ...mapActions('incomeModule', {
-      loadItems: FETCH_INCOMES
+      loadItems: FETCH_INCOMES,
+      loadItemsById: FETCH_INCOMES_BY_ID
     }),
     goBack () {
       window.history.go(-1)

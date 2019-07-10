@@ -22,6 +22,15 @@ const actions = {
         commit(_.INCOMES_ERROR, error)
       })
   },
+  [_.FETCH_INCOMES_BY_ID] ({ commit }, id) {
+    get(`${incomes}/list`, id)
+      .then(function (response) {
+        commit(_.SET_INCOMES, response.data)
+      })
+      .catch(function (error) {
+        commit(_.INCOMES_ERROR, error)
+      })
+  },
   [_.SAVE_INCOME] ({ commit }, { item }) {
     if (item.id) {
       put(`${incomes}/${item.id}`, item)
