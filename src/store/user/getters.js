@@ -1,15 +1,21 @@
 const getters = {
   isAdmin: (state) => {
     const roles = state.loginUser.roles
-    return roles.filter(role => role.code === 'ADM').length !== 0
+    if (roles) {
+      return roles.filter(role => role.code === 'ADM').length !== 0
+    }
   },
   isTeacher: (state) => {
     const roles = state.loginUser.roles
-    return roles.filter(role => role.code === 'DOC').length !== 0
+    if (roles) {
+      return roles.filter(role => role.code === 'DOC').length !== 0
+    }
   },
   isDonor: (state) => {
     const roles = state.loginUser.roles
-    return roles.filter(role => role.code === 'DON').length !== 0
+    if (roles) {
+      return roles.filter(role => role.code === 'DON').length !== 0
+    }
   },
   userId: (state) => {
     return state.loginUser.id
