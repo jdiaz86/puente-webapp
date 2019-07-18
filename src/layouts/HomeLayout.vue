@@ -72,7 +72,7 @@
           <q-item-main :label="$t('course_enrollments_menu')" />
         </q-item>
 
-        <q-item @click.native="$router.push('/incomes')" v-if="!isTeacher">
+        <q-item @click.native="$router.push('/incomes')" v-if="isAdmin || !isTeacher">
           <q-item-side icon="attach_money" />
           <q-item-main :label="$t('incomes_menu')" />
         </q-item>
